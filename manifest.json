@@ -3,13 +3,17 @@
 	"version": "1.0",
 	"description": "A web crawler for PeopleSoft Financial data",
 	"permissions": [
-		"storage"
+		"storage",
+		"declarativeContent"
 	],
 	"background":{
 		"scripts": [
 			"scripts/background.js"
 		],
 		"persistent": false
+	},
+	"page_action": {
+		"default_popup": "html/popup.html"
 	},
 	"manifest_version": 2
 }
