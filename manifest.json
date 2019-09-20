@@ -3,6 +3,8 @@
 	"version": "1.0",
 	"description": "A web crawler for PeopleSoft Financial data",
 	"permissions": [
+		"tabs",
+		"activeTab",
 		"storage",
 		"declarativeContent"
 	],

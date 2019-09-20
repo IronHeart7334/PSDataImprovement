@@ -1,4 +1,5 @@
-https://developer.chrome.com/extensions/getstarted
+//https://developer.chrome.com/extensions/getstarted
+//chrome://extensions/
 
 chrome.runtime.onInstalled.addListener(()=>{
     chrome.storage.sync.set({name: "name not set"}, ()=>{
