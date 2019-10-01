@@ -26,7 +26,7 @@ chrome.tabs.query({currentWindow: true, active: true}, function (tab) {
   myNewUrl = "https://arc.losrios.edu";
   chrome.tabs.update(tab.id, {url: myNewUrl}, (tab)=>{
       log("Window id is " + tab.windowId);
-      chrome.tabs.sendMessage(tab.id, {text: "DOM"}, log);
+      //chrome.tabs.sendMessage(tab.id, {text: "DOM"}, log);
   });
 });
 
