@@ -1,3 +1,4 @@
+/*
 let orderElements = [];
 let orderCount = 0;
 
@@ -15,8 +16,38 @@ $("#add").click(()=>{
     orderCount++;
     orderElements.push(newOrder);
 });
+*/
 
+$("#submit").click(()=>{
+    let orders = [];
+    let accts = $("#accts").val().split(",");
+    let orgs = $("#orgs").val().split(",");
+    let progs = $("#progs").val().split(",");
+    
+    let len = Math.max(accts.length, orgs.length, progs.length);
+    while(accts.length < len){
+        accts.push("");
+    }
+    while(orgs.length < len){
+        orgs.push("");
+    }
+    while(progs.length < len){
+        progs.push("");
+    }
+    for(let i = 0; i < len; i++){
+        orders.push([accts[i], orgs[i], progs[i]]);
+    }
+    
+    chrome.storage.sync.set({orders: JSON.stringify(orders)}, ()=>{
+        chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
+            let myNewUrl = "https://psreports.losrios.edu"; //not working
+            myNewUrl = "https://arc.losrios.edu";
+            chrome.tabs.update(tab.id, {url: myNewUrl}, (tab)=>{});
+        });
+    });
+});
 
+/*
 let button = document.getElementById("submit");
 
 button.addEventListener("click", (e)=>{
@@ -35,7 +66,7 @@ button.addEventListener("click", (e)=>{
         });
     });
 });
-
+*/
 //https://stackoverflow.com/questions/19758028/chrome-extension-get-dom-content
 //this file is run whenever the icon is clicked
 
