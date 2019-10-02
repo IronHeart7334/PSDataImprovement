@@ -17,7 +17,7 @@
     "content_scripts": [
         {
             "matches" : ["https://*.losrios.edu/*"],
-            "js": ["scripts/content.js", "ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"]
+            "js": ["scripts/jquery-3.4.1.min.js", "scripts/content.js"]
         }
     ],
 	"browser_action": {
