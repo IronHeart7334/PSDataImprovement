@@ -4,9 +4,7 @@
 
 // this file should be the event handler
 chrome.runtime.onInstalled.addListener(()=>{
-    chrome.storage.sync.set({name: "name not set"}, ()=>{
-        alert("Click the plugin icon to set your name");
-    });
+    alert("Click the plugin icon to enter your orders");
     
     //click on plugin icon to show popup
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
@@ -23,13 +21,4 @@ chrome.runtime.onInstalled.addListener(()=>{
             ]
         }]);
     });
-    /*
-    chrome.runtime.onMessage.addListener((msg, sender, sendResponse)=>{
-        // If the received message has the expected format...
-        if (msg.text === "DOM") {
-            // Call the specified callback, passing
-            // the web-page's DOM content as argument
-            sendResponse(document.all[0].outerHTML);
-        }   
-    });*/
 });

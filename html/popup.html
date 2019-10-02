@@ -4,11 +4,25 @@
         <title>Input</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../scripts/jquery-3.4.1.min.js"></script>
     </head>
     <body>
         <form>
-            <label for="name">Enter name:</label>
-            <input type="text" id="name" name="name"/>
+            <div>
+                <label for="accts">Account</label>
+                <input type="text" id="accts" name="accts"/>
+            </div>
+            <div>
+                <label for="orgs">ORG</label>
+                <input type="text" id="orgs" name="orgs"/>
+            </div>
+            <div>
+                <label for="progs">Program</label>
+                <input type="text" id="progs" name="progs"/>
+            </div>
+            <div>
+                <button type="submit" id="submit">Run script</button>
+            </div>
         </form>
         <script src="../scripts/popup.js"></script>
     </body>
