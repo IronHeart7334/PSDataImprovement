@@ -1,3 +1,22 @@
+let orderElements = [];
+let orderCount = 0;
+
+$("#add").click(()=>{
+    let newOrder = $(`<div id=order${orderCount}></div>`);
+    //newOrder.addClass("order");
+    let acctIp = $(`<input type="text" id="acct${orderCount}" name="acct${orderCount}"/>`);
+    let orgIp = $(`<input type="text" id="org${orderCount}" name="org${orderCount}"/>`);
+    let progIp = $(`<input type="text" id="prog${orderCount}" name="prog${orderCount}"/>`);
+    
+    newOrder.append(acctIp).append(orgIp).append(progIp);
+    
+    //not working. flashes into existence briefly, then goes away
+    newOrder.insertBefore($("#add"));
+    orderCount++;
+    orderElements.push(newOrder);
+});
+
+
 let button = document.getElementById("submit");
 
 button.addEventListener("click", (e)=>{
