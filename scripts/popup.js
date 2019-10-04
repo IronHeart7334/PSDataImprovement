@@ -42,7 +42,10 @@ $("#submit").click(()=>{
         chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
             let myNewUrl = "https://psreports.losrios.edu"; //not working
             myNewUrl = "https://arc.losrios.edu";
-            chrome.tabs.update(tab.id, {url: myNewUrl}, (tab)=>{});
+            myNewUrl = "http://localhost:8000";
+            chrome.tabs.update(tab.id, {url: myNewUrl}, (tab)=>{
+                //script is unloaded after updating
+            });
         });
     });
 });

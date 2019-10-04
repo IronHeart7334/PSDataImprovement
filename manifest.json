@@ -16,8 +16,9 @@
 	},
     "content_scripts": [
         {
-            "matches" : ["https://*.losrios.edu/*"],
-            "js": ["scripts/jquery-3.4.1.min.js", "scripts/content.js"]
+            "matches" : ["https://*.losrios.edu/*", "http://localhost:8000/*"],
+            "js": ["scripts/jquery-3.4.1.min.js", "scripts/content.js"],
+            "run_at": "document_end"
         }
     ],
 	"browser_action": {
