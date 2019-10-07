@@ -19,6 +19,22 @@ $("#add").click(()=>{
 */
 
 $("#submit").click(()=>{
+    /*
+    chrome.runtime.getPackageDirectoryEntry((root)=>{
+        $("#temp").text(root.toString());
+    });*/
+    chrome.fileSystem.chooseEntry({type: "openFile"}, (readOnlyEntry)=>{
+        readOnlyEntry.file((file)=>{
+            let reader = new FileReader();
+            reader.onloadend = (e)=>{
+                chrome.storage.set({file: e.target.results}, ()=>{
+                    chrome.tabs.update(0, {url: "arc.losrios.edu"});
+                });
+            };
+        });
+    });
+    return;
+    
     let orders = [];
     let accts = $("#accts").val().split(",");
     let orgs = $("#orgs").val().split(",");
