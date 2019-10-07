@@ -4,7 +4,7 @@
 console.log("Loaded from content.js");
 console.log(document);
 
-$(document).ready(()=>{
+$(window).on("load", ()=>{
     if(window.location.href !== "https://psreports.losrios.edu/AccountBalanceSumDescr.asp"){
         console.log("URL is " + window.location.href);
     } else {
@@ -25,11 +25,12 @@ function processOrder(){
             //not out of orders to process
             let order = lines.shift().split(",");
             
-            
             chrome.storage.sync.set({"file": lines.join("\n")}, ()=>{
                 //problem is these aren't loaded yet
+                console.log($('[name="Account"]').value);
                 $('[name="BusinessUnit"]').value = order[0];
                 $('[name="Account"]').value = order[1];
+                console.log($('[name="Account"]').value);
                 $('[name="Fund"]').value = order[2];
                 $('[name="ORG"]').value = order[3];
                 $('[name="Program"]').value = order[4];
