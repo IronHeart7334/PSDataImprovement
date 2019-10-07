@@ -1,28 +1,34 @@
 // do DOM based stuff with this
 // https://developer.chrome.com/extensions/content_scripts
-console.log($);
 
 console.log("Loaded from content.js");
 console.log(document);
 
-chrome.storage.sync.get("file", (file)=>{
-    console.log(file["file"]);
-});
-/*
-chrome.storage.sync.get("orders", (orderString)=>{
-    let orders = JSON.parse(orderString["orders"]);
-    console.log(orders);
-    if(orders.length === 0){
-        return;
-    }
-    
-    let currOrder = orders.shift();
-    chrome.storage.sync.set({"orders": JSON.stringify(orders)}, ()=>{
-        $("accts").val(currOrder[0]);
-        $("orgs").val(currOrder[1]);
-        $("progs").val(currOrder[2]);
-        $("#submit").click();
+if(window.location.href !== "https://psreports.losrios.edu/AccountBalanceSumDescr.asp"){
+    console.log("URL is " + window.location.href);
+} else {
+    chrome.storage.sync.get("file", (file)=>{
+        /*
+        Since the script is reloaded every time the page does, 
+        we need to delete entries as we complete them
+         */
+        let text = file["file"];
+        let lines = text.split(/\r?\n|\r/);
+        if(lines.length !== 0){
+            //not out of orders to process
+            let order = lines.shift().split(",");
+            chrome.storage.sync.set({"file": lines.join("\n")}, ()=>{
+                $('[name="BusinessUnit"]').value = order[0];
+                $('[name="Account"]').value = order[1];
+                $('[name="Fund"]').value = order[2];
+                $('[name="ORG"]').value = order[3];
+                $('[name="Program"]').value = order[4];
+                $('[name="SubClass"]').value = order[5];
+                $('[name="BudgetYear"]').value = order[6];
+                $('[name="BudgetGrant"]').value = order[7];
+            });
+        }
+
+        console.log(lines);
     });
-});
-*/
-//start doing DOM manipulation to fill in the fields
+}
