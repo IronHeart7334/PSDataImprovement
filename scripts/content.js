@@ -6,7 +6,7 @@ console.log("Loaded from content.js");
 console.log(document);
 
 chrome.storage.sync.get("file", (file)=>{
-    console.log(JSON.parse(file["file"]));
+    console.log(file["file"]);
 });
 /*
 chrome.storage.sync.get("orders", (orderString)=>{

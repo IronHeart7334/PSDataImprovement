@@ -34,11 +34,17 @@ $("#submit").click(()=>{
             };
         });
     });*/
-    chrome.storage.sync.set({file: JSON.stringify($("#file").get(0))}, ()=>{
-        chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
-            chrome.tabs.update(tab.id, {url: "https://arc.losrios.edu"});
+    let fileChooser = $("#file").get(0);
+    
+    let reader = new FileReader();
+    reader.onload = (e)=>{
+        chrome.storage.sync.set({file: e.target.result}, ()=>{
+            chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
+                chrome.tabs.update(tab.id, {url: "https://arc.losrios.edu"});
+            });
         });
-    });
+    };
+    reader.readAsText(fileChooser.files[0], "UTF-8");
     return;
     
     let orders = [];
