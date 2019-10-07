@@ -4,9 +4,16 @@
 console.log("Loaded from content.js");
 console.log(document);
 
-if(window.location.href !== "https://psreports.losrios.edu/AccountBalanceSumDescr.asp"){
-    console.log("URL is " + window.location.href);
-} else {
+$(document).ready(()=>{
+    if(window.location.href !== "https://psreports.losrios.edu/AccountBalanceSumDescr.asp"){
+        console.log("URL is " + window.location.href);
+    } else {
+        processOrder();
+    }
+});
+
+function processOrder(){
+    //make this ignore first row 
     chrome.storage.sync.get("file", (file)=>{
         /*
         Since the script is reloaded every time the page does, 
@@ -17,7 +24,10 @@ if(window.location.href !== "https://psreports.losrios.edu/AccountBalanceSumDesc
         if(lines.length !== 0){
             //not out of orders to process
             let order = lines.shift().split(",");
+            
+            
             chrome.storage.sync.set({"file": lines.join("\n")}, ()=>{
+                //problem is these aren't loaded yet
                 $('[name="BusinessUnit"]').value = order[0];
                 $('[name="Account"]').value = order[1];
                 $('[name="Fund"]').value = order[2];
