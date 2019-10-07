@@ -5,6 +5,10 @@ console.log($);
 console.log("Loaded from content.js");
 console.log(document);
 
+chrome.storage.sync.get("file", (file)=>{
+    console.log(JSON.parse(file["file"]));
+});
+/*
 chrome.storage.sync.get("orders", (orderString)=>{
     let orders = JSON.parse(orderString["orders"]);
     console.log(orders);
@@ -20,5 +24,5 @@ chrome.storage.sync.get("orders", (orderString)=>{
         $("#submit").click();
     });
 });
-
+*/
 //start doing DOM manipulation to fill in the fields

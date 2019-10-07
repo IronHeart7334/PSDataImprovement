@@ -23,6 +23,7 @@ $("#submit").click(()=>{
     chrome.runtime.getPackageDirectoryEntry((root)=>{
         $("#temp").text(root.toString());
     });*/
+    /*
     chrome.fileSystem.chooseEntry({type: "openFile"}, (readOnlyEntry)=>{
         readOnlyEntry.file((file)=>{
             let reader = new FileReader();
@@ -31,6 +32,11 @@ $("#submit").click(()=>{
                     chrome.tabs.update(0, {url: "arc.losrios.edu"});
                 });
             };
+        });
+    });*/
+    chrome.storage.sync.set({file: JSON.stringify($("#file").get(0))}, ()=>{
+        chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
+            chrome.tabs.update(tab.id, {url: "https://arc.losrios.edu"});
         });
     });
     return;
