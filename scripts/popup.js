@@ -2,7 +2,10 @@ $("#submit").click(()=>{
     let fileChooser = $("#file").get(0);
     let reader = new FileReader();
     reader.onload = (e)=>{
-        chrome.storage.sync.set({file: e.target.result}, ()=>{
+        let text = e.target.result;
+        //remove the header
+        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
+        chrome.storage.sync.set({file: newText}, ()=>{
             let newUrl = "https://psreports.losrios.edu/AccountBalanceSumDescr.asp";
             //newUrl = "https://arc.losrios.edu";
             setUrl(newUrl);
@@ -18,7 +21,8 @@ $("#test").click(()=>{
     let reader = new FileReader();
     reader.onload = (e)=>{
         let text = e.target.result;
-        let newText = text.substring(text.indexOf(/\r?\n|\r/, 0));
+        //remove the header
+        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
         chrome.storage.sync.set({file: newText}, ()=>{
             setUrl("localhost:8000");
         });

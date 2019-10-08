@@ -69,8 +69,10 @@ function test(){
                 $('[name="BudgetYear"]').val(order[6]);
                 $('[name="BudgetGrant"]').val(order[7]);
             });
+            console.log(order);
         }
 
         console.log(text);
+        
     });
 }
