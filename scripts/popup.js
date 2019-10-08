@@ -6,9 +6,11 @@ $("#submit").click(()=>{
         //remove the header
         let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
         chrome.storage.sync.set({file: newText}, ()=>{
-            let newUrl = "https://psreports.losrios.edu/AccountBalanceSumDescr.asp";
-            //newUrl = "https://arc.losrios.edu";
-            setUrl(newUrl);
+            chrome.storage.sync.set({result: ""}, ()=>{
+                let newUrl = "https://psreports.losrios.edu/AccountBalanceSumDescr.asp";
+                //newUrl = "https://arc.losrios.edu";
+                setUrl(newUrl);
+            });
         });
     };
     reader.readAsText(fileChooser.files[0], "UTF-8");
@@ -24,7 +26,9 @@ $("#test").click(()=>{
         //remove the header
         let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
         chrome.storage.sync.set({file: newText}, ()=>{
-            setUrl("localhost:8000");
+            chrome.storage.sync.set({result: ""}, ()=>{
+                setUrl("localhost:8000");
+            });
         });
     };
     reader.readAsText(fileChooser.files[0], "UTF-8");

@@ -12,6 +12,12 @@ $(window).on("load", ()=>{
         case "http://localhost:8000/":
             test();
             break;
+        case "http://localhost:8000/index.html":
+            test();
+            break;
+        case "http://localhost:8000/result.html":
+            readResult();
+            break;
         default:
             console.log("URL is " + window.location.href);
             break;
@@ -47,6 +53,15 @@ function processOrder(){
     });
 }
 
+function readResult(){
+    let text = $("body").html();
+    chrome.storage.sync.get("result", (result)=>{
+        chrome.storage.sync.set({"result": result["result"] + text}, ()=>{
+            
+        });
+    });
+}
+
 function test(){
     chrome.storage.sync.get("file", (file)=>{
         /*
@@ -55,10 +70,13 @@ function test(){
          */
         let text = file["file"];
         let lines = text.split(/\r?\n|\r/);
-        if(lines.length !== 0){
-            //not out of orders to process
-            let order = lines.shift().split(",");
-            
+        let order = lines.shift().split(",");
+        if(order.length !== 8){
+            //were done! Download the file
+            chrome.storage.sync.get("result", (result)=>{
+                download(result["result"], "result", "html");
+            });
+        } else {
             chrome.storage.sync.set({"file": lines.join("\n")}, ()=>{
                 $('[name="BusinessUnit"]').val(order[0]);
                 $('[name="Account"]').val(order[1]);
@@ -73,6 +91,21 @@ function test(){
         }
 
         console.log(text);
-        
     });
+}
+
+//https://stackoverflow.com/questions/13405129/javascript-create-and-save-file?noredirect=1&lq=1
+function download(data, name, extension){
+    console.log(data, name, extension);
+    let file = new Blob([data], {type: extension});
+    let a = $("<a></a>");
+    let url = URL.createObjectURL(file);
+    a.attr("href", url);
+    a.attr("download", name);
+    $("body").append(a);
+    a.click();
+    setTimeout(()=>{
+        $("body").remove(a);
+        window.URL.revokeObjectURL(url);
+    }, 0);
 }
