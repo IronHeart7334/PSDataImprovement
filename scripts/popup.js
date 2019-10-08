@@ -4,12 +4,9 @@ $("#submit").click(()=>{
     let reader = new FileReader();
     reader.onload = (e)=>{
         chrome.storage.sync.set({file: e.target.result}, ()=>{
-            chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
-                let newUrl = "https://psreports.losrios.edu/AccountBalanceSumDescr.asp";
-                //newUrl = "https://arc.losrios.edu";
-                //newUrl = "http://localhost:8000";
-                chrome.tabs.update(tab.id, {url: newUrl});
-            });
+            let newUrl = "https://psreports.losrios.edu/AccountBalanceSumDescr.asp";
+            //newUrl = "https://arc.losrios.edu";
+            setUrl(newUrl);
         });
     };
     reader.readAsText(fileChooser.files[0], "UTF-8");
@@ -17,5 +14,14 @@ $("#submit").click(()=>{
 
 //this file is run whenever the icon is clicked
 
+$("#test").click(()=>{
+    setUrl("localhost:8000");
+});
+
+function setUrl(newUrl){
+    chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
+        chrome.tabs.update(tab.id, {url: newUrl});
+    });
+}
 
 
