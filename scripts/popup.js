@@ -1,6 +1,5 @@
 $("#submit").click(()=>{
     let fileChooser = $("#file").get(0);
-    
     let reader = new FileReader();
     reader.onload = (e)=>{
         chrome.storage.sync.set({file: e.target.result}, ()=>{
@@ -15,7 +14,16 @@ $("#submit").click(()=>{
 //this file is run whenever the icon is clicked
 
 $("#test").click(()=>{
-    setUrl("localhost:8000");
+    let fileChooser = $("#file").get(0);
+    let reader = new FileReader();
+    reader.onload = (e)=>{
+        let text = e.target.result;
+        let newText = text.substring(text.indexOf(/\r?\n|\r/, 0));
+        chrome.storage.sync.set({file: newText}, ()=>{
+            setUrl("localhost:8000");
+        });
+    };
+    reader.readAsText(fileChooser.files[0], "UTF-8");
 });
 
 function setUrl(newUrl){

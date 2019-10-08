@@ -48,12 +48,29 @@ function processOrder(){
 }
 
 function test(){
-    console.log("test");
-    console.log($('[name="accts"]').val());
-    $('[name="accts"]').val(1234);
-    console.log($('[name="accts"]').val());
-    $("#test").click(()=>{
-        console.log("test");
-        test();
+    chrome.storage.sync.get("file", (file)=>{
+        /*
+        Since the script is reloaded every time the page does, 
+        we need to delete entries as we complete them
+         */
+        let text = file["file"];
+        let lines = text.split(/\r?\n|\r/);
+        if(lines.length !== 0){
+            //not out of orders to process
+            let order = lines.shift().split(",");
+            
+            chrome.storage.sync.set({"file": lines.join("\n")}, ()=>{
+                $('[name="BusinessUnit"]').val(order[0]);
+                $('[name="Account"]').val(order[1]);
+                $('[name="Fund"]').val(order[2]);
+                $('[name="ORG"]').val(order[3]);
+                $('[name="Program"]').val(order[4]);
+                $('[name="SubClass"]').val(order[5]);
+                $('[name="BudgetYear"]').val(order[6]);
+                $('[name="BudgetGrant"]').val(order[7]);
+            });
+        }
+
+        console.log(text);
     });
 }
