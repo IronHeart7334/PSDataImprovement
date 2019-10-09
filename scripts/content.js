@@ -50,10 +50,10 @@ function processOrder(){
                 $('[name="BudgetYear"]').val(order[6]);
                 $('[name="ProjectGrant"]').val(order[7]);
             });
-            console.log(order);
+            console.log("Current order is [" + order.join(", ") + "]");
         }
 
-        console.log(text);
+        console.log("Entire text is: \n" + text);
     });
 }
 
@@ -63,7 +63,11 @@ function readResult(){
     });
     
     chrome.storage.sync.get("result", (result)=>{
-        chrome.storage.sync.set({"result": result["result"] + text}, ()=>{
+        if(result["result"].trim() !== ""){
+            //already have a result, so ignore headers
+            text = text.substring(text.search(/\r?\n|\r/) + 1).trim();
+        }
+        chrome.storage.sync.set({"result": result["result"] + text + "\n"}, ()=>{
             console.log("set result to " + result["result"] + text);
         });
     });
@@ -74,11 +78,11 @@ function downloadResult(){
     chrome.storage.sync.get("result", (result)=>{
         let data = result["result"];
         console.log(data);
-        let file = new Blob([data], {type: "text/html"});
+        let file = new Blob([data], {type: "text/csv"});
         let a = $("<a></a>");
         let url = URL.createObjectURL(file);
         a.attr("href", url);
-        a.attr("download", "result.html");
+        a.attr("download", "result.csv");
         $("body").append(a);
         //JQuery click doesn't trigger hrefs, so I need to use the HTMLElement click method
         a[0].click();
