@@ -29,6 +29,10 @@ $(window).on("load", ()=>{
 
 function processOrder(){
     chrome.storage.sync.get("file", (file)=>{
+        if(typeof file["file"] == undefined){
+            //script is done
+            return;
+        }
         /*
         Since the script is reloaded every time the page does, 
         we need to delete entries as we complete them
@@ -89,6 +93,9 @@ function downloadResult(){
         setTimeout(()=>{
             $("body").remove(a);
             window.URL.revokeObjectURL(url);
+            chrome.storage.sync.clear(["file", "result"], ()=>{
+                console.log("All done :)");
+            });
         }, 0);
     });
 }
