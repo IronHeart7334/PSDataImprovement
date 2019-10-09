@@ -57,18 +57,11 @@ function processOrder(){
     });
 }
 
-async function readResult(){
-    let text = $("body").html();
-    //let result = await get("result");
-    //await set("result", result + text);
-    /*await new Promise((resolve, reject)=>{
-        chrome.storage.sync.set({"result": result + text}, ()=>{
-            resolve();
-        });
+function readResult(){
+    let text = $("table[border=1]").table2CSV({
+        delivery: "value"
     });
-    console.log(result);
-    let x = await get("result");
-    console.log(x);*/
+    
     chrome.storage.sync.get("result", (result)=>{
         chrome.storage.sync.set({"result": result["result"] + text}, ()=>{
             console.log("set result to " + result["result"] + text);
