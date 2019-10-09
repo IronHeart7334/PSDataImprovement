@@ -93,7 +93,7 @@ function downloadResult(){
         setTimeout(()=>{
             $("body").remove(a);
             window.URL.revokeObjectURL(url);
-            chrome.storage.sync.clear(["file", "result"], ()=>{
+            chrome.storage.sync.remove(["file", "result"], ()=>{
                 console.log("All done :)");
             });
         }, 0);

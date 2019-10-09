@@ -1,6 +1,7 @@
 
 async function get(varName){
     return new Promise((resolve, reject)=>{
+        //change all storage to local
         chrome.storage.sync.get(varName, (val)=>{
             console.log(val, val[varName]);
             resolve(val[varName]);
