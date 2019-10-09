@@ -9,6 +9,9 @@ $(window).on("load", ()=>{
         case "https://psreports.losrios.edu/AccountBalanceSumDescr.asp":
             processOrder();
             break;
+        case "https://psreports.losrios.edu/AccountBalanceSumDescrQ.asp":
+            readResult();
+            break;
         case "http://localhost:8000/":
             processOrder();
             break;
@@ -45,7 +48,7 @@ function processOrder(){
                 $('[name="Program"]').val(order[4]);
                 $('[name="SubClass"]').val(order[5]);
                 $('[name="BudgetYear"]').val(order[6]);
-                $('[name="BudgetGrant"]').val(order[7]);
+                $('[name="ProjectGrant"]').val(order[7]);
             });
             console.log(order);
         }
@@ -54,8 +57,18 @@ function processOrder(){
     });
 }
 
-function readResult(){
+async function readResult(){
     let text = $("body").html();
+    //let result = await get("result");
+    //await set("result", result + text);
+    /*await new Promise((resolve, reject)=>{
+        chrome.storage.sync.set({"result": result + text}, ()=>{
+            resolve();
+        });
+    });
+    console.log(result);
+    let x = await get("result");
+    console.log(x);*/
     chrome.storage.sync.get("result", (result)=>{
         chrome.storage.sync.set({"result": result["result"] + text}, ()=>{
             
