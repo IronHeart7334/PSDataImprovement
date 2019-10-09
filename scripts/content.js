@@ -71,7 +71,7 @@ async function readResult(){
     console.log(x);*/
     chrome.storage.sync.get("result", (result)=>{
         chrome.storage.sync.set({"result": result["result"] + text}, ()=>{
-            
+            console.log("set result to " + result["result"] + text);
         });
     });
 }
