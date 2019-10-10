@@ -1,9 +1,6 @@
 // do DOM based stuff with this
 // https://developer.chrome.com/extensions/content_scripts
 
-console.log("Loaded from content.js");
-console.log(document);
-
 $(window).on("load", ()=>{
     switch(window.location.href){
         case "https://psreports.losrios.edu/AccountBalanceSumDescr.asp":
@@ -27,16 +24,48 @@ $(window).on("load", ()=>{
     }
 });
 
+async function processOrder(){
+    let fileText = await get("file");
+    if(typeof fileText == undefined){
+        //script is done
+        return;
+    }
+    /*
+    Since the script is reloaded every time the page does, 
+    we need to delete entries as we complete them
+     */
+    let order = fileText.substring(0, fileText.search(NEWLINE) + 1).trim().split(",");
+    fileText = fileText.substring(fileText.search(NEWLINE) + 1, fileText.length).trim();
+    
+    console.log("Order is [" + order.join(", ") + "]");
+    console.log("Remaining orders are: \n" + fileText);
+        
+    if(order.length !== 8){
+        //were done! Download the file
+        downloadResult();
+    } else {
+        await set("file", fileText);
+        $('[name="BusinessUnit"]').val(order[0]);
+        $('[name="Account"]').val(order[1]);
+        $('[name="Fund"]').val(order[2]);
+        $('[name="ORG"]').val(order[3]);
+        $('[name="Program"]').val(order[4]);
+        $('[name="SubClass"]').val(order[5]);
+        $('[name="BudgetYear"]').val(order[6]);
+        $('[name="ProjectGrant"]').val(order[7]);
+    }
+}
+/*
 function processOrder(){
     chrome.storage.sync.get("file", (file)=>{
         if(typeof file["file"] == undefined){
             //script is done
             return;
         }
-        /*
+        
         Since the script is reloaded every time the page does, 
         we need to delete entries as we complete them
-         */
+         
         let text = file["file"];
         let lines = text.split(/\r?\n|\r/);
         let order = lines.shift().split(",");
@@ -59,7 +88,7 @@ function processOrder(){
 
         console.log("Entire text is: \n" + text);
     });
-}
+}*/
 
 function readResult(){
     let text = $("table[border=1]").table2CSV({
@@ -100,6 +129,9 @@ function downloadResult(){
     });
 }
 
-$("#test").click(()=>{
-    downloadResult();
+$("#test").click(async()=>{
+    await set("test", "test value");
+    let val = await get("test");
+    console.log("val is " + val);
+    //downloadResult();
 });
