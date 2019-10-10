@@ -22,38 +22,18 @@ $(window).on("load", ()=>{
     } else {
         console.log("Hostname is " + loc.hostname);
     }
-    /*
-    switch(window.location.hostname){
-        case "https://psreports.losrios.edu/AccountBalanceSumDescr.asp":
-            processOrder();
-            break;
-        case "https://psreports.losrios.edu/AccountBalanceSumDescrQ.asp":
-            readResult();
-            break;
-        case "http://localhost:8000/":
-            processOrder();
-            break;
-        case "http://localhost:8000/index.html":
-            processOrder();
-            break;
-        case "http://localhost:8000/result.html":
-            readResult();
-            break;
-        default:
-            console.log("URL is " + window.location.href);
-            break;
-    }*/
 });
 
 async function processOrder(){
-    let autoclick = await get("autoclick");
-    console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
-    
     let fileText = await get("file");
     if(fileText === null){
         //script is done
+        console.log("done");
         return;
     }
+    let autoclick = await get("autoclick");
+    console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
+    
     /*
     Since the script is reloaded every time the page does, 
     we need to delete entries as we complete them
@@ -81,7 +61,9 @@ async function processOrder(){
         $('[name="ProjectGrant"]').val(order[7]);
         if(autoclick){
             //might need to change based on what the button is like on the actual website
-            $('[name="submit"]')[0].click();
+            setTimeout(()=>{
+                $('[name="submit"]')[0].click();
+            }, 1000);
         }
     }
 }
@@ -91,6 +73,7 @@ async function readResult(){
     
     if(prevResult === null){
         //done with script
+        console.log("done");
         return;
     }
     
@@ -110,25 +93,11 @@ async function readResult(){
     
     if(autoclick){
         // change name once I see the official site again
-        $("a[name='goback']")[0].click();
+        setTimeout(()=>{
+            $("a[name='goback']")[0].click();
+        }, 1000);
     }
 }
-/*
-function readResult(){
-    let text = $("table[border=1]").table2CSV({
-        delivery: "value"
-    });
-    
-    chrome.storage.sync.get("result", (result)=>{
-        if(result["result"].trim() !== ""){
-            //already have a result, so ignore headers
-            text = text.substring(text.search(/\r?\n|\r/) + 1).trim();
-        }
-        chrome.storage.sync.set({"result": result["result"] + text + "\n"}, ()=>{
-            console.log("set result to " + result["result"] + text);
-        });
-    });
-}*/
 
 //https://stackoverflow.com/questions/13405129/javascript-create-and-save-file?noredirect=1&lq=1
 async function downloadResult(){
