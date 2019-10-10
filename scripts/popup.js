@@ -10,46 +10,18 @@ function start(url){
         let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
         await set("file", newText);
         await set("result", "");
+        await set("autoclick", $("#autoclick").is(":checked"));
         setUrl(url);
     };
     reader.readAsText(file, "UTF-8");
 }
 
-$("#submit").click(()=>start("https://psreports.losrios.edu/AccountBalanceSumDescr.asp"));
-$("#test").click(()=>start("http://localhost:8000/index.html"));
-    /*
-    ()=>{
-    let fileChooser = $("#file").get(0);
-    let reader = new FileReader();
-    reader.onload = async(e)=>{
-        let text = e.target.result;
-        //remove the header
-        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
-        await set("file", newText);
-        await set("result", "");
-        let newUrl = "https://psreports.losrios.edu/AccountBalanceSumDescr.asp";
-        setUrl(newUrl);
-    };
-    reader.readAsText(fileChooser.files[0], "UTF-8");
-});*/
-
-
-/*
+$("#submit").click(()=>{
+    start("https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
+});
 $("#test").click(()=>{
-    let fileChooser = $("#file").get(0);
-    let reader = new FileReader();
-    reader.onload = (e)=>{
-        let text = e.target.result;
-        //remove the header
-        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
-        chrome.storage.sync.set({file: newText}, ()=>{
-            chrome.storage.sync.set({result: ""}, ()=>{
-                setUrl("localhost:8000");
-            });
-        });
-    };
-    reader.readAsText(fileChooser.files[0], "UTF-8");
-});*/
+    start("http://localhost:8000/index.html");
+});
 
 function setUrl(newUrl){
     chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
