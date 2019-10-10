@@ -47,7 +47,7 @@ $(window).on("load", ()=>{
 
 async function processOrder(){
     let autoclick = await get("autoclick");
-    console.log("Autoclick is " + (autoclick) ? "on" : "off");
+    console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
     
     let fileText = await get("file");
     if(fileText === null){
@@ -58,8 +58,10 @@ async function processOrder(){
     Since the script is reloaded every time the page does, 
     we need to delete entries as we complete them
      */
-    let order = fileText.substring(0, fileText.search(NEWLINE) + 1).trim().split(",");
-    fileText = fileText.substring(fileText.search(NEWLINE) + 1, fileText.length).trim();
+    let orders = fileText.split(NEWLINE);
+    let order = orders.shift().split(",");
+    
+    fileText = orders.join("\n");
     
     console.log("Order is [" + order.join(", ") + "]");
     console.log("Remaining orders are: \n" + fileText);
@@ -85,19 +87,25 @@ async function processOrder(){
 }
 
 async function readResult(){
+    let prevResult = await get("result");
+    
+    if(prevResult === null){
+        //done with script
+        return;
+    }
+    
     let autoclick = await get("autoclick");
-    console.log("Autoclick is " + (autoclick) ? "on" : "off");
+    console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
     
     let text = $("table[border=1]").table2CSV({
         delivery: "value"
     });
     
-    let prevResult = await get("result");
     if(prevResult.trim() !== ""){
         //already have a result, so ignore headers of the new text
         text = text.substring(text.search(/\r?\n|\r/) + 1).trim();
     }
-    await set("result", prevResult + text);
+    await set("result", prevResult + text + "\n");
     console.log("set result to " + prevResult + text);
     
     if(autoclick){
