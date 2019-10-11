@@ -1,6 +1,16 @@
-// do DOM based stuff with this
-// https://developer.chrome.com/extensions/content_scripts
+/*
+This script is appended to the end of any page which meets
+the conditions described in manifest.json
 
+See https://developer.chrome.com/extensions/content_scripts
+*/
+
+
+
+/*
+Once the page is fully loaded,
+run functions based on which page this was injected into.
+ */
 $(window).on("load", ()=>{
     let loc = window.location;
     if(loc.hostname === "psreports.losrios.edu"){
@@ -28,7 +38,7 @@ async function processOrder(){
     let fileText = await get("file");
     if(fileText === null){
         //script is done
-        console.log("done");
+        console.log("script is done");
         return;
     }
     let autoclick = await get("autoclick");
@@ -48,7 +58,8 @@ async function processOrder(){
         
     if(order.length !== 8){
         //were done! Download the file
-        downloadResult();
+        await downloadResult();
+        clean();
     } else {
         await set("file", fileText);
         $('[name="BusinessUnit"]').val(order[0]);
@@ -73,7 +84,7 @@ async function readResult(){
     
     if(prevResult === null){
         //done with script
-        console.log("done");
+        console.log("script is done");
         return;
     }
     
@@ -94,7 +105,7 @@ async function readResult(){
     if(autoclick){
         // change name once I see the official site again
         setTimeout(()=>{
-            $("a[name='goback']")[0].click();
+            $("button[name='goback']")[0].click();
         }, 1000);
     }
 }
@@ -102,51 +113,26 @@ async function readResult(){
 //https://stackoverflow.com/questions/13405129/javascript-create-and-save-file?noredirect=1&lq=1
 async function downloadResult(){
     let result = await get("result");
-    console.log(result);
     let file = new Blob([result], {type: "text/csv"});
     let a = $("<a></a>");
     let url = URL.createObjectURL(file);
     a.attr("href", url);
     a.attr("download", "result.csv");
     $("body").append(a);
+    console.log(result);
+    
     //JQuery click doesn't trigger hrefs, so I need to use the HTMLElement click method
     a[0].click();
     setTimeout(async()=>{
         $("body").remove(a);
         window.URL.revokeObjectURL(url);
-        await del("file");
-        await del("result");
-        await del("autoclick");
-        console.log("All done :)");
+        await set("result", "");
     }, 0);
 }
-/*
-//https://stackoverflow.com/questions/13405129/javascript-create-and-save-file?noredirect=1&lq=1
-function downloadResult(){
-    chrome.storage.local.get("result", (result)=>{
-        let data = result["result"];
-        console.log(data);
-        let file = new Blob([data], {type: "text/csv"});
-        let a = $("<a></a>");
-        let url = URL.createObjectURL(file);
-        a.attr("href", url);
-        a.attr("download", "result.csv");
-        $("body").append(a);
-        //JQuery click doesn't trigger hrefs, so I need to use the HTMLElement click method
-        a[0].click();
-        setTimeout(()=>{
-            $("body").remove(a);
-            window.URL.revokeObjectURL(url);
-            chrome.storage.local.remove(["file", "result", "autoclick"], ()=>{
-                console.log("All done :)");
-            });
-        }, 0);
-    });
-}*/
 
-$("#test").click(async()=>{
-    await set("test", "test value");
-    let val = await get("test");
-    console.log("val is " + val);
-    //downloadResult();
-});
+async function clean(){
+    await del("file");
+    await del("result");
+    await del("autoclick");
+    console.log("All done :)");
+}
