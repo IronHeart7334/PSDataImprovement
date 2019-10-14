@@ -2,11 +2,22 @@
  I will want to templatize these files later,
  like I did with the room visualizer.
  */
-$(window).on("load", ()=>{
+$(window).on("load", async ()=>{
+    let reqFile = await get("reqFile");
+    if(reqFile === null){
+        console.log("Script is done.");
+        return;
+    }
+    
     if(window.location.pathname === "/REQ_History.asp"){
         submitReqQuery();
     } else if(window.location.pathname === "/REQ_HistoryQ.asp"){
-        readReqResult();
+        let qrParamPairs = window.location.search.substring(1).split("&");
+        if(qrParamPairs.some((paramPair)=>paramPair === "REQ_History_PagingMove=ALL")){
+            readReqResults();
+        } else {
+            expandReqResult();
+        }
     } else {
         console.log("window.location.pathname is " + window.location.pathname);
     }
@@ -14,10 +25,7 @@ $(window).on("load", ()=>{
 
 async function submitReqQuery(){
     let reqFile = await get("reqFile");
-    if(reqFile === null){
-        console.log("Script is done.");
-        return;
-    }
+    
     let autoclick = await get("autoclick");
     console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
     
@@ -41,13 +49,15 @@ async function submitReqQuery(){
     }
 }
 
+async function expandReqResults(){
+    let expandButton = $('a[href="/REQ_HistoryQ.asp?REQ_History_PagingMove=ALL');
+    if(expandButton.length > 0){
+        expandButton[0].click();
+    }
+}
+
 async function readReqResult(){
     let prevResult = await get("reqResult");
-    
-    if(prevResult === null){
-        console.log("script is done");
-        return;
-    }
     
     let autoclick = await get("autoclick");
     console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
@@ -64,8 +74,7 @@ async function readReqResult(){
     console.log("set result to " + prevResult + text);
     
     if(autoclick){
-        
-        //$("a[href='AccountBalanceSumDescr.asp']")[0].click();
+        $("a[href='REQ_History.asp']")[0].click();
     }
 }
 
@@ -77,7 +86,7 @@ async function downloadResult(){
     a.attr("href", url);
     a.attr("download", "reqResult.csv");
     $("body").append(a);
-    console.log(reqResult);
+    console.log(result);
     
     //JQuery click doesn't trigger hrefs, so I need to use the HTMLElement click method
     a[0].click();
@@ -89,7 +98,7 @@ async function downloadResult(){
 }
 
 async function clean(){
-    await del("reQile");
+    await del("reqFile");
     await del("reqResult");
     await del("autoclick");
     console.log("All done :)");
