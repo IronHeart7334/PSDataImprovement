@@ -21,7 +21,7 @@
             "run_at": "document_end"
         },
         {
-            "matches": ["https://psreports.losrios.edu/REQ_History.asp"],
+            "matches": ["https://psreports.losrios.edu/REQ_History.asp", "https://psreports.losrios.edu/REQ_HistoryQ.asp*"],
             "js": ["scripts/jquery-3.4.1.min.js", "scripts/table2CSV-master/table2CSV.js", "scripts/util.js", "scripts/reqContent.js"],
             "run_at": "document_end"
         }

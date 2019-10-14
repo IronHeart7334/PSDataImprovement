@@ -9,14 +9,17 @@ $(window).on("load", async ()=>{
         return;
     }
     
+    console.log("running script");
+    
     if(window.location.pathname === "/REQ_History.asp"){
         submitReqQuery();
     } else if(window.location.pathname === "/REQ_HistoryQ.asp"){
         let qrParamPairs = window.location.search.substring(1).split("&");
+        console.log(qrParamPairs);
         if(qrParamPairs.some((paramPair)=>paramPair === "REQ_History_PagingMove=ALL")){
             readReqResults();
         } else {
-            expandReqResult();
+            expandReqResults();
         }
     } else {
         console.log("window.location.pathname is " + window.location.pathname);
@@ -56,7 +59,7 @@ async function expandReqResults(){
     }
 }
 
-async function readReqResult(){
+async function readReqResults(){
     let prevResult = await get("reqResult");
     
     let autoclick = await get("autoclick");
@@ -70,7 +73,7 @@ async function readReqResult(){
         //already have a result, so ignore headers of the new text
         text = text.substring(text.search(/\r?\n|\r/) + 1).trim();
     }
-    await set("result", prevResult + text + "\n");
+    await set("reqResult", prevResult + text + "\n");
     console.log("set result to " + prevResult + text);
     
     if(autoclick){
