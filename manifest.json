@@ -24,6 +24,11 @@
             "matches": ["https://psreports.losrios.edu/REQ_History.asp", "https://psreports.losrios.edu/REQ_HistoryQ.asp*"],
             "js": ["scripts/jquery-3.4.1.min.js", "scripts/table2CSV-master/table2CSV.js", "scripts/util.js", "scripts/reqContent.js"],
             "run_at": "document_end"
+        },
+        {
+            "matches": ["https://psreports.losrios.edu/PO_History.asp", "https://psreports.losrios.edu/PO_HistoryQ.asp*"],
+            "js": ["scripts/jquery-3.4.1.min.js", "scripts/table2CSV-master/table2CSV.js", "scripts/util.js", "scripts/poContent.js"],
+            "run_at": "document_end"
         }
     ],
 	"browser_action": {
