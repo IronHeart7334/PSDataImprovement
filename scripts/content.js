@@ -14,9 +14,9 @@ run functions based on which page this was injected into.
 $(window).on("load", ()=>{
     let loc = window.location;
     if(loc.hostname === "psreports.losrios.edu"){
-        if(loc.pathname === "AccountBalanceSumDescr.asp"){
+        if(loc.pathname === "/AccountBalanceSumDescr.asp"){
             processOrder();
-        } else if(loc.pathname === "AccountBalanceSumDescrQ.asp"){
+        } else if(loc.pathname === "/AccountBalanceSumDescrQ.asp"){
             readResult();
         } else {
             console.log("Pathname is " + loc.pathname);
@@ -71,10 +71,7 @@ async function processOrder(){
         $('[name="BudgetYear"]').val(order[6]);
         $('[name="ProjectGrant"]').val(order[7]);
         if(autoclick){
-            //might need to change based on what the button is like on the actual website
-            setTimeout(()=>{
-                $('[name="submit"]')[0].click();
-            }, 1000);
+            $('[name="Query"]')[0].click();
         }
     }
 }
@@ -103,10 +100,7 @@ async function readResult(){
     console.log("set result to " + prevResult + text);
     
     if(autoclick){
-        // change name once I see the official site again
-        setTimeout(()=>{
-            $("button[name='goback']")[0].click();
-        }, 1000);
+        $("a[href='AccountBalanceSumDescr.asp']")[0].click();
     }
 }
 
