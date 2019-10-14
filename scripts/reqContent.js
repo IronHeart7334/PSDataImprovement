@@ -5,8 +5,8 @@
 $(window).on("load", ()=>{
     if(window.location.pathname === "/REQ_History.asp"){
         submitReqQuery();
-    } else if(window.location.pathname === ""){
-        
+    } else if(window.location.pathname === "/REQ_HistoryQ.asp"){
+        readReqResult();
     } else {
         console.log("window.location.pathname is " + window.location.pathname);
     }
@@ -38,6 +38,34 @@ async function submitReqQuery(){
         if(autoclick){
             $('[name="Query"]')[0].click();
         }
+    }
+}
+
+async function readReqResult(){
+    let prevResult = await get("reqResult");
+    
+    if(prevResult === null){
+        console.log("script is done");
+        return;
+    }
+    
+    let autoclick = await get("autoclick");
+    console.log("Autoclick is " + ((autoclick) ? "on" : "off"));
+    
+    let text = $("table[border=1]").table2CSV({
+        delivery: "value"
+    });
+    
+    if(prevResult.trim() !== ""){
+        //already have a result, so ignore headers of the new text
+        text = text.substring(text.search(/\r?\n|\r/) + 1).trim();
+    }
+    await set("result", prevResult + text + "\n");
+    console.log("set result to " + prevResult + text);
+    
+    if(autoclick){
+        
+        //$("a[href='AccountBalanceSumDescr.asp']")[0].click();
     }
 }
 
