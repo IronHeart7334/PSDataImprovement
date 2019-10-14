@@ -37,7 +37,6 @@ $(window).on("load", ()=>{
 async function processOrder(){
     let fileText = await get("file");
     if(fileText === null){
-        //script is done
         console.log("script is done");
         return;
     }

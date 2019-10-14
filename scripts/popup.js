@@ -2,7 +2,6 @@
 
 function start(url){
     let file = $("#file").get(0).files[0];
-    $("#text").text(typeof file);
     let reader = new FileReader();
     reader.onload = async(e)=>{
         let text = e.target.result;
@@ -21,6 +20,21 @@ $("#submit").click(()=>{
 });
 $("#test").click(()=>{
     start("http://localhost:8000/index.html");
+});
+
+$("#reqSubmit").click(()=>{
+    let file = $("#reqFile").get(0).files[0];
+    let reader = new FileReader();
+    reader.onload = async(e)=>{
+        let text = e.target.result;
+        //remove the header
+        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
+        await set("reqFile", newText);
+        await set("reqResult", "");
+        await set("autoclick", $("#autoclick").is(":checked"));
+        setUrl("https://psreports.losrios.edu/REQ_History.asp");
+    };
+    reader.readAsText(file, "UTF-8");
 });
 
 function setUrl(newUrl){

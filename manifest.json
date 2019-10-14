@@ -16,8 +16,13 @@
 	},
     "content_scripts": [
         {
-            "matches" : ["https://*.losrios.edu/*", "http://localhost:8000/*"],
+            "matches" : ["https://psreports.losrios.edu/AccountBalanceSumDescr.asp", "https://psreports.losrios.edu/AccountBalanceSumDescrQ.asp", "http://localhost:8000/*"],
             "js": ["scripts/jquery-3.4.1.min.js", "scripts/table2CSV-master/table2CSV.js", "scripts/util.js", "scripts/content.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://psreports.losrios.edu/REQ_History.asp"],
+            "js": ["scripts/jquery-3.4.1.min.js", "scripts/table2CSV-master/table2CSV.js", "scripts/util.js", "scripts/reqContent.js"],
             "run_at": "document_end"
         }
     ],
