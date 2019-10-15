@@ -1,3 +1,50 @@
+class ReqContentScript extends ContentScript{
+    constructor(){
+        super("reqFile", "REQ_History.asp", "REQ_HistoryQ.asp");
+    }
+    
+    async processQuery(query){
+        $('input[name="REQUESTOR_ID"]').val(query[0]);
+        $('input[name="REQ_NO"]').val(query[1]);
+        if(this.autoclick){
+            $('[name="Query"]')[0].click();
+        }
+    }
+    
+    async processResult(){
+        let qrParamPairs = window.location.search.substring(1).split("&");
+        console.log(qrParamPairs);
+        if(qrParamPairs.some((paramPair)=>paramPair === "REQ_History_PagingMove=ALL")){
+            return readReqResults();
+        } else {
+            return expandReqResults();
+        }
+    }
+    
+    async readReqResults(){
+        return $("table[border=1]").table2CSV({
+            delivery: "value"
+        });
+    }
+    
+    async expandReqResults(){
+        let expandButton = $('a[href="/REQ_HistoryQ.asp?REQ_History_PagingMove=ALL');
+        if(expandButton.length > 0){
+            expandButton[0].click();
+        }
+        return "";
+    }
+    
+    // this part should click the back button
+    async postProcessResult(){
+        if(autoclick){
+            $("a[href='REQ_History.asp']")[0].click();
+        }
+    }
+}
+new ReqContentScript().run();
+
+/*
 $(window).on("load", async ()=>{
     let reqFile = await get("reqFile");
     if(reqFile === null){
@@ -21,7 +68,7 @@ $(window).on("load", async ()=>{
         console.log("window.location.pathname is " + window.location.pathname);
     }
 });
-
+*/
 async function submitReqQuery(){
     let reqFile = await get("reqFile");
     
