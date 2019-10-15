@@ -1,7 +1,3 @@
-/*
- I will want to templatize these files later,
- like I did with the room visualizer.
- */
 $(window).on("load", async ()=>{
     let reqFile = await get("reqFile");
     if(reqFile === null){

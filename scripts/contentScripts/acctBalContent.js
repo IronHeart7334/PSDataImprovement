@@ -1,9 +1,4 @@
-/*
-This script is appended to the end of any page which meets
-the conditions described in manifest.json
 
-See https://developer.chrome.com/extensions/content_scripts
-*/
 
 
 
