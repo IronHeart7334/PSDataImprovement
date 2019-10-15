@@ -1,7 +1,41 @@
+class AcctBalContentScript extends ContentScript{
+    constructor(){
+        super("file", "AccountBalanceSumDescr.asp", "AccountBalanceSumDescrQ.asp");
+    }
+    
+    async processQuery(query){
+        $('[name="BusinessUnit"]').val(query[0]);
+        $('[name="Account"]').val(query[1]);
+        $('[name="Fund"]').val(query[2]);
+        $('[name="ORG"]').val(query[3]);
+        $('[name="Program"]').val(query[4]);
+        $('[name="SubClass"]').val(query[5]);
+        $('[name="BudgetYear"]').val(query[6]);
+        $('[name="ProjectGrant"]').val(query[7]);
+        if(this.autoclick){
+            $('[name="Query"]')[0].click();
+        }
+    }
+    
+    async processResult(){
+        return $("table[border=1]").table2CSV({
+            delivery: "value"
+        });
+    }
+    
+    async postProcessResult(){
+        if(autoclick){
+            $("a[href='AccountBalanceSumDescr.asp']")[0].click();
+        }
+    }
+}
+new AcctBalContentScript().run();
+
+
 /*
 Once the page is fully loaded,
 run functions based on which page this was injected into.
- */
+ 
 $(window).on("load", ()=>{
     let loc = window.location;
     if(loc.hostname === "psreports.losrios.edu"){
@@ -24,6 +58,7 @@ $(window).on("load", ()=>{
         console.log("Hostname is " + loc.hostname);
     }
 });
+*/
 
 async function processOrder(){
     let fileText = await get("file");

@@ -23,7 +23,8 @@
             "js": [
                 "scripts/jquery-3.4.1.min.js", 
                 "scripts/table2CSV-master/table2CSV.js", 
-                "scripts/util.js", 
+                "scripts/util.js",
+                "scripts/content/contentScriptTemplate.js",
                 "scripts/content/acctBalContent.js"
             ],
             "run_at": "document_end"
@@ -37,6 +38,7 @@
                 "scripts/jquery-3.4.1.min.js", 
                 "scripts/table2CSV-master/table2CSV.js", 
                 "scripts/util.js", 
+                "scripts/content/contentScriptTemplate.js",
                 "scripts/content/reqContent.js"
             ],
             "run_at": "document_end"
@@ -50,6 +52,7 @@
                 "scripts/jquery-3.4.1.min.js", 
                 "scripts/table2CSV-master/table2CSV.js",
                 "scripts/util.js", 
+                "scripts/content/contentScriptTemplate.js",
                 "scripts/content/poContent.js"
             ],
             "run_at": "document_end"

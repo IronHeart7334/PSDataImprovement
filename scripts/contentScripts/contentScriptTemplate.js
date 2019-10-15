@@ -4,6 +4,28 @@
  * See https://developer.chrome.com/extensions/content_scripts
  */
 
+/**
+ * ContentScript is an abstract class which serves as the base for content scripts.
+ * subclasses should override the following methods:
+ *  
+ *  (1) processQuery(query); This method is run whenever the script loads into a page with the pathname
+ *      matching the ContentScript's inputURL. Query is an array of data which should be put into form elements on the page.
+ *      
+ *  (2) processResult(); This method is run whenever the script loads into a page 
+ *      with the pathname matching the ContentScript's resultURL. This method should
+ *      pull data from the result of a query, then return a string containing the result,
+ *      formatted as CSV.
+ *      
+ *  (3) postProcessResult(); This method is run after running processResult 
+ *      and storing the data. Generally speaking, this method should click
+ *      any "back" or "enter a new query" buttons on the page. 
+ *      (only if this.autoclick is true)
+ * 
+ * At the end of content scripts overriding this,
+ * you should have something like this:
+ * 
+ *  new ContentScriptSubclass().run();
+ */
 class ContentScript{
     /*
      * queryFileName: the key in local storage which links to
