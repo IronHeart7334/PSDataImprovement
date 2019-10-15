@@ -1,7 +1,3 @@
-
-
-
-
 /*
 Once the page is fully loaded,
 run functions based on which page this was injected into.
