@@ -12,7 +12,8 @@ class AcctBalContentScript extends ContentScript{
         $('[name="SubClass"]').val(query[5]);
         $('[name="BudgetYear"]').val(query[6]);
         $('[name="ProjectGrant"]').val(query[7]);
-        if(this.autoclick){
+        let autoclick = await get("autoclick");
+        if(autoclick){
             $('[name="Query"]')[0].click();
         }
     }
@@ -24,6 +25,7 @@ class AcctBalContentScript extends ContentScript{
     }
     
     async postProcessResult(){
+        let autoclick = await get("autoclick");
         if(autoclick){
             $("a[href='AccountBalanceSumDescr.asp']")[0].click();
         }

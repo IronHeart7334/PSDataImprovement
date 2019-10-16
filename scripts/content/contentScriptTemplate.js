@@ -35,12 +35,7 @@ class ContentScript{
      * resultURL: the pathname of the page where the script
      *  should extract data from the result of its query
      */
-    async constructor(queryFileName, resultFileName, inputURL, resultURL){
-        let data = await get(queryFileName);
-        if(data === null){
-            throw new Error(`Nothing is set in local storage for key "${queryFileName}"`);
-        }
-        
+    constructor(queryFileName, resultFileName, inputURL, resultURL){
         if(!inputURL.startsWith("/")){
             inputURL += "/";
         }
@@ -52,7 +47,6 @@ class ContentScript{
         this.resultFileName = resultFileName;
         this.inputURL = inputURL;
         this.resultURL = resultURL;
-        this.autoclick = await get("autoclick");
     }
     
     checkURL(){

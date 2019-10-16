@@ -6,7 +6,8 @@ class ReqContentScript extends ContentScript{
     async processQuery(query){
         $('input[name="REQUESTOR_ID"]').val(query[0]);
         $('input[name="REQ_NO"]').val(query[1]);
-        if(this.autoclick){
+        let autoclick = await get("autoclick");
+        if(autoclick){
             $('[name="Query"]')[0].click();
         }
     }
@@ -37,6 +38,7 @@ class ReqContentScript extends ContentScript{
     
     // this part should click the back button
     async postProcessResult(){
+        let autoclick = await get("autoclick");
         if(autoclick){
             $("a[href='REQ_History.asp']")[0].click();
         }

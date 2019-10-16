@@ -3,7 +3,7 @@ function linkButton(buttonId, sourceFileName, resultFileName, startURL){
     $("#" + buttonId).click(()=>{
         let file = $("#" + sourceFileName).get(0).files[0];
         let reader = new FileReader();
-        reader.onload(async(e)=>{
+        reader.onload = async(e)=>{
             let text = e.target.result;
             //remove the header
             let newText = text.substring(text.search(NEWLINE) + 1).trim();
@@ -11,7 +11,7 @@ function linkButton(buttonId, sourceFileName, resultFileName, startURL){
             await set(resultFileName, "");
             await set("autoclick", $("#autoclick").is(":checked"));
             setUrl(startURL);
-        });
+        };
         reader.readAsText(file, "UTF-8");
     });
 }
