@@ -19,18 +19,22 @@ linkButton("acctSubmit", "acctFile", "acctResult", "https://psreports.losrios.ed
 linkButton("reqSubmit", "reqFile", "reqResult", "https://psreports.losrios.edu/REQ_History.asp");
 
 //needs special behaviour
-$("#poFile").click(()=>{
+//working here
+$("#poSubmit").click(()=>{
     let file = $("#poFile").get(0).files[0];
     let reader = new FileReader();
     reader.onload = async(e)=>{
         let text = e.target.result;
         let data = text.split(NEWLINE).map((line)=>line.split(","));
-        let reqIdCol = data[0].indexOf("Req ID");
-        let poIdCol = data[0].indexOf("PO ID");
-        let newText = "Req ID, PO ID";
+        //the file has quote marks around just about everything
+        let reqIdCol = data[0].indexOf('"Req ID"');
+        let poIdCol = data[0].indexOf('"PO ID"');
+        let newText = "";
         data.shift(); //remove header
+        //convert to reqId, poId
         data.forEach((line)=>{
-            newText += NEWLINE + line[reqIdCol] + "," + line[poIdCol];
+            //need to remove quote marks around each entry, make sure they aren't blank or "PO is awaiting dispatch"
+            newText += "\n" + line[reqIdCol] + "," + line[poIdCol];
         });
         
         await set("poFile", newText);

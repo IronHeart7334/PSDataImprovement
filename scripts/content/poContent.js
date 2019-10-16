@@ -43,4 +43,4 @@ class PoContentScript extends ContentScript{
         }
     }
 }
-new ReqContentScript().run();
+new PoContentScript().run();

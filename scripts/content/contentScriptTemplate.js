@@ -106,7 +106,7 @@ class ContentScript{
         let a = $("<a></a>");
         let url = URL.createObjectURL(file);
         a.attr("href", url);
-        a.attr("download", "result.csv");
+        a.attr("download", this.resultFileName + ".csv");
         $("body").append(a);
         console.log("downloading \n" + result);
 
