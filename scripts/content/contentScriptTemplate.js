@@ -37,10 +37,10 @@ class ContentScript{
      */
     constructor(queryFileName, resultFileName, inputURL, resultURL){
         if(!inputURL.startsWith("/")){
-            inputURL += "/";
+            inputURL = "/" + inputURL;
         }
         if(!resultURL.startsWith("/")){
-            resultURL += "/";
+            resultURL = "/" + resultURL;
         }
         
         this.queryFileName = queryFileName;
@@ -52,9 +52,9 @@ class ContentScript{
     checkURL(){
         let page = window.location.pathname;
         if(page === this.inputURL){
-            inputData();
+            this.inputData();
         } else if(page === this.resultURL){
-            readResult();
+            this.readResult();
         } else {
             throw new Error(
                 `This script was inserted into a page with pathname
@@ -79,7 +79,7 @@ class ContentScript{
         console.log("Remaining queries are: \n" + remainingQueries);
         
         await set(this.queryFileName, remainingQueries);
-        await processQuery(currQ);
+        await this.processQuery(currQ);
     }
     
     async readResult(){
@@ -87,7 +87,7 @@ class ContentScript{
         if(prevResult === null){
             throw new Error("Result file for script does not exist, yet the script continues to run: it should be done by now.");
         }
-        let newText = await processResult();
+        let newText = await this.processResult();
         if(prevResult.trim() !== ""){
             //already have a result, so get rid of headers
             newText = "\n" + newText.substring(newText.search(NEWLINE) + 1).trim();
@@ -95,8 +95,8 @@ class ContentScript{
         await set(this.resultFileName, prevResult + newText);
         console.log("Set result to \n" + prevResult + newText);
         
-        await checkIfDone();
-        await postProcessResult();
+        await this.checkIfDone();
+        await this.postProcessResult();
     }
     
     async downloadResult(){
@@ -133,8 +133,8 @@ class ContentScript{
             done = true;
         } else if(remainingQ.trim() === ""){
             //no more queries to process, so clean up and download
-            await downloadResult();
-            await clean();
+            await this.downloadResult();
+            await this.clean();
             done = true;
         }
         //else, not done
@@ -148,7 +148,7 @@ class ContentScript{
             if(order === null){
                 console.log("Script is done. Do nothing.");
             } else {
-                checkURL();
+                this.checkURL();
             }
         });
     }

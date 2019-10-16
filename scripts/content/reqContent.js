@@ -3,6 +3,16 @@ class ReqContentScript extends ContentScript{
         super("reqFile", "reqResult", "REQ_History.asp", "REQ_HistoryQ.asp");
     }
     
+    checkURL(){
+        let qrParamPairs = window.location.search.substring(1).split("&");
+        console.log(qrParamPairs);
+        if(window.location.path === this.resultURL && !qrParamPairs.some((paramPair)=>paramPair === "REQ_History_PagingMove=ALL")){
+            this.expandReqResults();
+        } else {
+            super.checkURL();
+        }
+    }
+    
     async processQuery(query){
         $('input[name="REQUESTOR_ID"]').val(query[0]);
         $('input[name="REQ_NO"]').val(query[1]);
@@ -13,16 +23,6 @@ class ReqContentScript extends ContentScript{
     }
     
     async processResult(){
-        let qrParamPairs = window.location.search.substring(1).split("&");
-        console.log(qrParamPairs);
-        if(qrParamPairs.some((paramPair)=>paramPair === "REQ_History_PagingMove=ALL")){
-            return readReqResults();
-        } else {
-            return expandReqResults();
-        }
-    }
-    
-    async readReqResults(){
         return $("table[border=1]").table2CSV({
             delivery: "value"
         });
@@ -33,7 +33,6 @@ class ReqContentScript extends ContentScript{
         if(expandButton.length > 0){
             expandButton[0].click();
         }
-        return "";
     }
     
     // this part should click the back button
