@@ -1,6 +1,6 @@
 class AcctBalContentScript extends ContentScript{
     constructor(){
-        super("file", "AccountBalanceSumDescr.asp", "AccountBalanceSumDescrQ.asp");
+        super("acctFile", "acctResult", "AccountBalanceSumDescr.asp", "AccountBalanceSumDescrQ.asp");
     }
     
     async processQuery(query){

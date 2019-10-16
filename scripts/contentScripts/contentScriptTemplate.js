@@ -35,7 +35,7 @@ class ContentScript{
      * resultURL: the pathname of the page where the script
      *  should extract data from the result of its query
      */
-    async constructor(queryFileName, inputURL, resultURL){
+    async constructor(queryFileName, resultFileName, inputURL, resultURL){
         let data = await get(queryFileName);
         if(data === null){
             throw new Error(`Nothing is set in local storage for key "${queryFileName}"`);
@@ -49,11 +49,10 @@ class ContentScript{
         }
         
         this.queryFileName = queryFileName;
-        this.resultFileName = queryFileName + " result";
+        this.resultFileName = resultFileName;
         this.inputURL = inputURL;
         this.resultURL = resultURL;
         this.autoclick = await get("autoclick");
-        await set(this.resultFileName, "");
     }
     
     checkURL(){

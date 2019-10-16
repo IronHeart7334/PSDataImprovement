@@ -1,6 +1,6 @@
 class ReqContentScript extends ContentScript{
     constructor(){
-        super("reqFile", "REQ_History.asp", "REQ_HistoryQ.asp");
+        super("reqFile", "reqResult", "REQ_History.asp", "REQ_HistoryQ.asp");
     }
     
     async processQuery(query){

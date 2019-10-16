@@ -1,25 +1,18 @@
 //this file is run whenever the icon is clicked
 
-function start(url){
-    let file = $("#file").get(0).files[0];
+$("#acctSubmit").click(()=>{
+    let file = $("#acctFile").get(0).files[0];
     let reader = new FileReader();
     reader.onload = async(e)=>{
         let text = e.target.result;
         //remove the header
-        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
-        await set("file", newText);
-        await set("result", "");
+        let newText = text.substring(text.search(NEWLINE) + 1).trim();
+        await set("acctFile", newText);
+        await set("acctResult", "");
         await set("autoclick", $("#autoclick").is(":checked"));
-        setUrl(url);
+        setUrl("https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
     };
     reader.readAsText(file, "UTF-8");
-}
-
-$("#submit").click(()=>{
-    start("https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
-});
-$("#test").click(()=>{
-    start("http://localhost:8000/index.html");
 });
 
 $("#reqSubmit").click(()=>{
@@ -28,7 +21,7 @@ $("#reqSubmit").click(()=>{
     reader.onload = async(e)=>{
         let text = e.target.result;
         //remove the header
-        let newText = text.substring(text.search(/\r?\n|\r/) + 1).trim();
+        let newText = text.substring(text.search(NEWLINE) + 1).trim();
         await set("reqFile", newText);
         await set("reqResult", "");
         await set("autoclick", $("#autoclick").is(":checked"));
