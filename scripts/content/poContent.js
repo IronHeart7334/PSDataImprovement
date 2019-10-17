@@ -6,7 +6,7 @@ class PoContentScript extends ContentScript{
     checkURL(){
         let qrParamPairs = window.location.search.substring(1).split("&");
         console.log(qrParamPairs);
-        if(window.location.pathname === this.resultURL && !qrParamPairs.some((paramPair)=>paramPair === "POID_History_PagingMove=ALL")){
+        if(window.location.pathname.toUpperCase() === this.resultURL && !qrParamPairs.some((paramPair)=>paramPair === "POID_History_PagingMove=ALL")){
             this.expandReqResults();
         } else {
             super.checkURL();

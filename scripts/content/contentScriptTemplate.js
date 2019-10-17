@@ -45,12 +45,12 @@ class ContentScript{
         
         this.queryFileName = queryFileName;
         this.resultFileName = resultFileName;
-        this.inputURL = inputURL;
-        this.resultURL = resultURL;
+        this.inputURL = inputURL.toUpperCase();
+        this.resultURL = resultURL.toUpperCase();
     }
     
     checkURL(){
-        let page = window.location.pathname;
+        let page = window.location.pathname.toUpperCase();
         if(page === this.inputURL){
             this.inputData();
         } else if(page === this.resultURL){

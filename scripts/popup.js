@@ -31,11 +31,23 @@ $("#poSubmit").click(()=>{
         let poIdCol = data[0].indexOf('"PO ID"');
         let newText = "";
         data.shift(); //remove header
+        let reqId;
+        let poId;
         //convert to reqId, poId
-        data.forEach((line)=>{
-            //need to remove quote marks around each entry, make sure they aren't blank or "PO is awaiting dispatch"
-            newText += "\n" + line[reqIdCol] + "," + line[poIdCol];
-        });
+        data
+            .filter((line)=>line[poIdCol] !== "PO is awaiting dispatch" && line[poIdCol].trim() !== "")
+            .forEach((line)=>{
+                //need to remove quote marks around each entry
+                reqId = line[reqIdCol].trim();
+                poId = line[poIdCol].trim();
+                while(reqId.indexOf('"') !== -1){
+                    reqId = reqId.replace('"', '');
+                }
+                while(poId.indexOd('"') !== -1){
+                    poId = poId.replace('"', '');
+                }
+                newText += "\n" + reqId + "," + poId;
+            });
         
         await set("poFile", newText);
         await set("poResult", "");
