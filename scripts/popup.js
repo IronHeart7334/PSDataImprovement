@@ -93,6 +93,28 @@ $("#poInfoSubmit").click(()=>{
     };
     reader.readAsText(file, "UTF-8");
 });
+/*
+$("#everythingSubmit").click(()=>{
+    let acctFile = $("#acctFile2").get(0).files[0];
+    let reader1 = new FileReader();
+    let reader2 = new FileReader();
+    let count = 0;
+    
+    reader1.onload = async(e)=>{
+        let text = e.target.result;
+        //remove the header
+        let newText = text.substring(text.search(NEWLINE) + 1).trim();
+        await set("acctFile2", newText);
+        await set("acctResult2", "");
+        await set("autoclick", $("#autoclick").is(":checked"));
+        count++;
+        if(count === 2){
+            //might cause issues if JS variables don't lock or aren't synchronized
+            setUrl("https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
+        }
+    };
+    reader1.readAsText(acctFile, "UTF-8");
+});*/
 
 function setUrl(newUrl){
     chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
