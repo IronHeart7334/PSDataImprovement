@@ -58,6 +58,20 @@
                 "scripts/content/poContent.js"
             ],
             "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://psreports.losrios.edu/PurchaseOrderInformation.asp*",
+                "https://psreports.losrios.edu/PurchaseOrderInformationQ.asp*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js", 
+                "scripts/table2CSV-master/table2CSV.js",
+                "scripts/util.js", 
+                "scripts/content/contentScriptTemplate.js",
+                "scripts/content/poInfoContent.js"
+            ],
+            "run_at": "document_end"
         }
     ],
 	"browser_action": {
