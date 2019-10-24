@@ -18,6 +18,7 @@ function linkButton(buttonId, sourceFileName, resultFileName, startURL){
 linkButton("acctSubmit", "acctFile", "acctResult", "https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
 linkButton("reqSubmit", "reqFile", "reqResult", "https://psreports.losrios.edu/REQ_History.asp");
 
+//add file-filtering function parameter to linkButton.
 //needs special behaviour
 $("#poSubmit").click(()=>{
     let file = $("#poFile").get(0).files[0];

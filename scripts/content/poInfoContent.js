@@ -1,6 +1,6 @@
 class PoInfoContentScript extends ContentScript{
     constructor(){
-        super("poInfoFile", "poInfoResult", "PurchaseOrderInformation.asp", "PPurchaseOrderInformationQ.asp");
+        super("poInfoFile", "poInfoResult", "PurchaseOrderInformation.asp", "PurchaseOrderInformationQ.asp");
     }
     
     async processQuery(query){
@@ -13,7 +13,7 @@ class PoInfoContentScript extends ContentScript{
     }
     
     async processResult(){
-        return $("table[border=1]").eq(1).table2CSV({
+        return $("table[border=1]").table2CSV({
             delivery: "value"
         });
     }
