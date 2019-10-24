@@ -9,22 +9,75 @@
     </head>
     <body>
         <div>
-            <h2>Select the Budget code CSV file</h2>
+            <div>
+                <h2>Query Budget Data</h2>
+            </div>
+            <div>
+                <label for="acctFile">Budget code CSV file</label>
+                <input type="file" id="acctFile" name="acctFile"/>
+            </div>
+            <div>
+                <button id="acctSubmit">Gather Budget Data</button>
+            </div>
         </div>
         <div>
-            <label for="file">Upload CSV</label>
-            <input type="file" id="file" name="file"/>
+            <div>
+                <h2>Query Requisition Data</h2>
+            </div>
+            <div>
+                <label for="reqFile">Requestor CSV file</label>
+                <input type="file" id="reqFile" name="reqFile"/>
+            </div>
+            <div>
+                <button id="reqSubmit">Gather Requisition Data</button>
+            </div>
         </div>
         <div>
-            <label for="autoclick">Auto-click submit buttons</label>
-            <input type="checkbox" id="autoclick" name="autoclick"/>
+            <div>
+                <h2>Query Purchase Order Transaction History</h2>
+            </div>
+            <div>
+                <label for="poFile">Upload result of requisition query</label>
+                <input type="file" id="poFile" name="poFile"/>
+            </div>
+            <div>
+                <button id="poSubmit">Gather PO Transaction Data</button>
+            </div>
         </div>
         <div>
-            <button id="submit">Gather Budget Data</button>
+            <div>
+                <h2>Query Purchase Order Information</h2>
+            </div>
+            <div>
+                <label for="poInfoFile">Upload result of requisition query</label>
+                <input type="file" id="poInfoFile" name="poInfoFile"/>
+            </div>
+            <div>
+                <button id="poInfoSubmit">Gather PO Information</button>
+            </div>
         </div>
         <!--<div>
-            <button id="test">Test on localhost</button>
+            <div>
+                <h2>Do Everything</h2>
+            </div>
+            <div>
+                <label for="acctFile2">Budget Codes</label>
+                <input type="file" id="acctFile2"/>
+            </div>
+            <div>
+                <label for="reqFile2">Requestor Data</label>
+                <input type="file" id="reqFile2"/>
+            </div>
+            <div>
+                <button id="everythingSubmit">Gather All Information</button>
+            </div>
         </div>-->
+        <div>
+            <div>
+                <label for="autoclick">Auto-click submit buttons</label>
+                <input type="checkbox" id="autoclick" name="autoclick"/>
+            </div>
+        </div>
         
         <script src="../scripts/popup.js"></script>
     </body>

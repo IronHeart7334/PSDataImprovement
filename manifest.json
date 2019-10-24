@@ -16,8 +16,61 @@
 	},
     "content_scripts": [
         {
-            "matches" : ["https://*.losrios.edu/*", "http://localhost:8000/*"],
-            "js": ["scripts/jquery-3.4.1.min.js", "scripts/table2CSV-master/table2CSV.js", "scripts/util.js", "scripts/content.js"],
+            "matches" : [
+                "https://psreports.losrios.edu/AccountBalanceSumDescr.asp*", 
+                "https://psreports.losrios.edu/AccountBalanceSumDescrQ.asp*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js", 
+                "scripts/table2CSV-master/table2CSV.js", 
+                "scripts/util.js",
+                "scripts/content/contentScriptTemplate.js",
+                "scripts/content/acctBalContent.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://psreports.losrios.edu/REQ_History.asp*",
+                "https://psreports.losrios.edu/REQ_HistoryQ.asp*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js", 
+                "scripts/table2CSV-master/table2CSV.js", 
+                "scripts/util.js", 
+                "scripts/content/contentScriptTemplate.js",
+                "scripts/content/reqContent.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://psreports.losrios.edu/PO_History.asp*",
+                "https://psreports.losrios.edu/PO_History.Asp*",
+                "https://psreports.losrios.edu/PO_history.asp*",
+                "https://psreports.losrios.edu/PO_HistoryQ.asp*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js", 
+                "scripts/table2CSV-master/table2CSV.js",
+                "scripts/util.js", 
+                "scripts/content/contentScriptTemplate.js",
+                "scripts/content/poContent.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://psreports.losrios.edu/PurchaseOrderInformation.asp*",
+                "https://psreports.losrios.edu/PurchaseOrderInformationQ.asp*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js", 
+                "scripts/table2CSV-master/table2CSV.js",
+                "scripts/util.js", 
+                "scripts/content/contentScriptTemplate.js",
+                "scripts/content/poInfoContent.js"
+            ],
             "run_at": "document_end"
         }
     ],

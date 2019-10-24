@@ -6,6 +6,10 @@
 chrome.runtime.onInstalled.addListener(()=>{
     alert("Click the plugin icon to enter your orders");
     
+    /*
+    I don't think I need any of this stuff
+    
+    
     //click on plugin icon to show popup
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
         chrome.declarativeContent.onPageChanged.addRules([{
@@ -20,5 +24,5 @@ chrome.runtime.onInstalled.addListener(()=>{
                 new chrome.declarativeContent.ShowPageAction()
             ]
         }]);
-    });
+    });*/
 });
