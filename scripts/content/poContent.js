@@ -39,7 +39,7 @@ class PoContentScript extends ContentScript{
     async postProcessResult(){
         let autoclick = await get("autoclick");
         if(autoclick){
-            $("a[href='PO_History.asp']")[0].click();
+            $("a[href='PO_history.asp']")[0].click();
         }
     }
 }

@@ -43,7 +43,7 @@ $("#poSubmit").click(()=>{
                 while(reqId.indexOf('"') !== -1){
                     reqId = reqId.replace('"', '');
                 }
-                while(poId.indexOd('"') !== -1){
+                while(poId.indexOf('"') !== -1){
                     poId = poId.replace('"', '');
                 }
                 newText += "\n" + reqId + "," + poId;

@@ -45,7 +45,9 @@
         },
         {
             "matches": [
-                "https://psreports.losrios.edu/PO_History.asp*", 
+                "https://psreports.losrios.edu/PO_History.asp*",
+                "https://psreports.losrios.edu/PO_History.Asp*",
+                "https://psreports.losrios.edu/PO_history.asp*",
                 "https://psreports.losrios.edu/PO_HistoryQ.asp*"
             ],
             "js": [
