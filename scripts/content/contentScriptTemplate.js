@@ -100,6 +100,12 @@ class ContentScript{
     }
     
     async downloadResult(){
+        return await download(
+            this.resultFileName + ".csv", 
+            await get(this.resultFileName),
+            "text/csv"
+        );
+        /*
         //https://stackoverflow.com/questions/13405129/javascript-create-and-save-file?noredirect=1&lq=1
         let result = await get(this.resultFileName);
         let file = new Blob([result], {type: "text/csv"});
@@ -115,7 +121,7 @@ class ContentScript{
         setTimeout(async()=>{
             $("body").remove(a);
             window.URL.revokeObjectURL(url);
-        }, 0);
+        }, 0);*/
     }
     
     async clean(){
