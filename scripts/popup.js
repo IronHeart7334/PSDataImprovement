@@ -19,6 +19,22 @@ linkButton("acctSubmit", "acctFile", "acctResult", "https://psreports.losrios.ed
 linkButton("reqSubmit", "reqFile", "reqResult", "https://psreports.losrios.edu/REQ_History.asp");
 
 //add file-filtering function parameter to linkButton.
+function formatBudgetCodeFile(fileText){
+    //split the data if it is given as budget code string
+    //find which columns contain what type of data
+    //return the new data, formatted how I need it
+}
+
+
+
+
+
+
+
+
+//
+//
+//
 //needs special behaviour
 $("#poSubmit").click(()=>{
     let file = $("#poFile").get(0).files[0];
