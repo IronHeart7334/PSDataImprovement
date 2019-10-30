@@ -17,6 +17,18 @@
     "content_scripts": [
         {
             "matches" : [
+                "http://localhost:8000/index.html/*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js", 
+                "scripts/table2CSV-master/table2CSV.js", 
+                "scripts/util.js",
+                "scripts/test.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches" : [
                 "https://psreports.losrios.edu/AccountBalanceSumDescr.asp*", 
                 "https://psreports.losrios.edu/AccountBalanceSumDescrQ.asp*"
             ],
