@@ -1,22 +1,47 @@
-//this file is run whenever the icon is clicked
-function linkButton(buttonId, sourceFileName, resultFileName, startURL){
+function linkButton(buttonId, sourceFileName, resultFileName, startURL, headers){
     $("#" + buttonId).click(()=>{
         let file = $("#" + sourceFileName).get(0).files[0];
         let reader = new FileReader();
         reader.onload = async(e)=>{
             let text = e.target.result;
-            //remove the header
-            let newText = text.substring(text.search(NEWLINE) + 1).trim();
-            await set(sourceFileName, newText);
-            await set(resultFileName, "");
-            await set("autoclick", $("#autoclick").is(":checked"));
-            setUrl(startURL);
+            let newText = formatFile(text, headers);
+            if(false){
+                download("test.csv", newText, "text/csv");
+            } else {
+                await set(sourceFileName, newText);
+                await set(resultFileName, "");
+                await set("autoclick", $("#autoclick").is(":checked"));
+                setUrl(startURL);
+            }
         };
         reader.readAsText(file, "UTF-8");
     });
 }
-linkButton("acctSubmit", "acctFile", "acctResult", "https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
-linkButton("reqSubmit", "reqFile", "reqResult", "https://psreports.losrios.edu/REQ_History.asp");
+linkButton(
+    "acctSubmit", 
+    "acctFile", 
+    "acctResult", 
+    "https://psreports.losrios.edu/AccountBalanceSumDescr.asp", 
+    [
+        "Business Unit",
+        "Account",
+        "Fund",
+        "Org/DeptID",
+        "Program",
+        "Sub-Class",
+        "Project/Grant"
+    ]
+);
+linkButton(
+    "reqSubmit", 
+    "reqFile", 
+    "reqResult", 
+    "https://psreports.losrios.edu/REQ_History.asp",
+    [
+        "requestor ID",
+        "requisition number"
+    ]
+);
 
 
 //temp
@@ -45,59 +70,7 @@ $("#test").click(()=>{
 });
 
 //add file-filtering function parameter to linkButton.
-/*
-function formatBudgetCodeFile(fileText){
-    let body = fileText.split(NEWLINE).map((row)=>row.split(","));
-    let headers = body.shift(); //removes headers from body
-    
-    if(headers.length < 8){
-        throw new Error("File does not contain enough headers: Budget code file must contain at least 8 columns");
-    }
-    
-    //the headers to search for.
-    //the file returned by this method will have its headers in this order
-    let searchFor = [
-        "business unit",
-        "account",
-        "fund",
-        "org",
-        "program",
-        "sub-class",
-        "budget year",
-        "project/grant"
-    ];
-    let headerCols = {};
-    let idx;
-    searchFor.forEach((header)=>{
-        idx = indexOfIgnoreCase(header, headers);
-        if(idx === -1){
-            throw new Error(`The header "${header}" is not in the submitted file. Are you sure this is the budget code file?`);
-        }
-        headerCols[header] = idx;
-    });
-    
-    let newFile = "";
-    body.forEach((row)=>{
-        for(let i = 0; i < searchFor.length; i++){
-            newFile += row[headerCols[searchFor[i]]];
-            newFile += (i === searchFor.length - 1) ? "\n" : ",";
-        }
-    });
-    return newFile;
-}*/
 
-
-
-
-
-
-
-
-
-
-//
-//
-//
 //needs special behaviour
 $("#poSubmit").click(()=>{
     let file = $("#poFile").get(0).files[0];

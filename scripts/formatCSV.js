@@ -1,5 +1,4 @@
 /*
- * Template - Work in progress
  * fileText: the original text of the file.
  * reqHeaders: an array of strings: the headers which must exist in the fileText
  *      The result will be formatted to contain only these headers, in the order given by this argument.
@@ -9,7 +8,7 @@ function formatFile(fileText, reqHeaders){
     let body = fileText.split(NEWLINE).map((row)=>row.split(","));
     let headers = body.shift(); //removes headers from body
     if(headers.length < reqHeaders.length){
-        throw new Error("File does not contain enough headers: It only has " + headers.length + ", but requires at least " + headerRequirements.length);
+        throw new Error("File does not contain enough headers: It only has " + headers.length + ", but requires at least " + reqHeaders.length);
     }
     
     //verify that all the columns exist
@@ -29,6 +28,11 @@ function formatFile(fileText, reqHeaders){
     body.forEach((row)=>{
         for(let i = 0; i < reqHeaders.length; i++){
             /*
+            
+            Having an issue where files formatted incorrectly
+            will result in a row of cells containing
+            "undefined" appended to the end of the result file.
+            
             data = row[headerCols[reqHeaders[i]]];
             if(data === undefined){
                 throw new Error();
