@@ -76,16 +76,7 @@ function formatBudgetCodeFile(fileText){
     return newFile;
 }
 
-function indexOfIgnoreCase(searchFor, options){
-    let ret = -1;
-    searchFor = searchFor.toUpperCase();
-    for(let i = 0; i < options.length && ret === -1; i++){
-        if(options[i].toUpperCase() === searchFor){
-            ret = i;
-        }
-    }
-    return ret;
-}
+
 
 
 
