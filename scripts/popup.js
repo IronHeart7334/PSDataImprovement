@@ -18,11 +18,73 @@ function linkButton(buttonId, sourceFileName, resultFileName, startURL){
 linkButton("acctSubmit", "acctFile", "acctResult", "https://psreports.losrios.edu/AccountBalanceSumDescr.asp");
 linkButton("reqSubmit", "reqFile", "reqResult", "https://psreports.losrios.edu/REQ_History.asp");
 
+
+//temp
+$("#test").click(()=>{
+    let file = $("#acctFile").get(0).files[0];
+    let reader = new FileReader();
+    reader.onload = async(e)=>{
+        let text = e.target.result;
+        try{
+            text = formatBudgetCodeFile(text);
+            $("#info").after(`<p>${text}</p>`);
+        } catch(e){
+            $("#info").after(`<p>${e.message}</p>`);
+        }
+    };
+    reader.readAsText(file, "UTF-8");
+});
+
 //add file-filtering function parameter to linkButton.
 function formatBudgetCodeFile(fileText){
-    //split the data if it is given as budget code string
-    //find which columns contain what type of data
-    //return the new data, formatted how I need it
+    let body = fileText.split(NEWLINE).map((row)=>row.split(","));
+    let headers = body.shift(); //removes headers from body
+    
+    if(headers.length < 8){
+        throw new Error("File does not contain enough headers: Budget code file must contain at least 8 columns");
+    }
+    
+    //the headers to search for.
+    //the file returned by this method will have its headers in this order
+    let searchFor = [
+        "business unit",
+        "account",
+        "fund",
+        "org",
+        "program",
+        "sub-class",
+        "budget year",
+        "project/grant"
+    ];
+    let headerCols = {};
+    let idx;
+    searchFor.forEach((header)=>{
+        idx = indexOfIgnoreCase(header, headers);
+        if(idx === -1){
+            throw new Error(`The header "${header}" is not in the submitted file. Are you sure this is the budget code file?`);
+        }
+        headerCols[header] = idx;
+    });
+    
+    let newFile = "";
+    body.forEach((row)=>{
+        for(let i = 0; i < searchFor.length; i++){
+            newFile += row[headerCols[searchFor[i]]];
+            newFile += (i === searchFor.length - 1) ? "\n" : ",";
+        }
+    });
+    return newFile;
+}
+
+function indexOfIgnoreCase(searchFor, options){
+    let ret = -1;
+    searchFor = searchFor.toUpperCase();
+    for(let i = 0; i < options.length && ret === -1; i++){
+        if(options[i].toUpperCase() === searchFor){
+            ret = i;
+        }
+    }
+    return ret;
 }
 
 
