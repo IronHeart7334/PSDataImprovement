@@ -26,8 +26,17 @@ $("#test").click(()=>{
     reader.onload = async(e)=>{
         let text = e.target.result;
         try{
-            text = formatBudgetCodeFile(text);
-            $("#info").after(`<p>${text}</p>`);
+            text = formatFile(text, [
+                "Business Unit",
+                "Account",
+                "Fund",
+                "Org/DeptID",
+                "Program",
+                "Sub-Class",
+                "Project/Grant"
+            ]);
+            download("test.csv", text, "text/csv");
+            //$("#info").after(`<p>${text}</p>`);
         } catch(e){
             $("#info").after(`<p>${e.message}</p>`);
         }
@@ -36,6 +45,7 @@ $("#test").click(()=>{
 });
 
 //add file-filtering function parameter to linkButton.
+/*
 function formatBudgetCodeFile(fileText){
     let body = fileText.split(NEWLINE).map((row)=>row.split(","));
     let headers = body.shift(); //removes headers from body
@@ -74,7 +84,7 @@ function formatBudgetCodeFile(fileText){
         }
     });
     return newFile;
-}
+}*/
 
 
 

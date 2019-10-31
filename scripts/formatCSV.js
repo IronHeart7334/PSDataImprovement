@@ -1,56 +1,41 @@
-class HeaderRequirement{
-    /*
-     * 
-     * @param {string} text what this header should output as in the result file
-     * @param {string array} possibleMatches alternate values for headers in a source header which will match to this one
-     * @returns {HeaderRequirement}
-     */
-    constructor(text, possibleMatches){
-        this.text = text;
-        if(possibleMatches === null || possibleMatches === undefined){
-            this.possibleMatches = [text];
-        } else if(!Array.isArray(possibleMatches)){
-            this.possibleMatches = [possibleMatches];
-        } else {
-            this.possibleMatches = possibleMatches;
-        }
-        this.possibleMatches = this.possibleMatches.map((match)=>match.toUpperCase());
-    }
-    
-    /*
-     * Searches for any headers in the given string array which match this requirement
-     * @param {type} headers
-     * @returns {int} the index of this header in the given array of headers
-     */
-    checkForMatch(headers){
-        let ret = -1;
-        headers = headers.map((header)=>header.toUpperCase());
-        for(let i = 0; i < headers.length && ret === -1; i++){
-            if(this.possibleMatches.some((match)=>match === headers[i])){
-                ret = i;
-            }
-        }
-        return ret;
-    }
-}
 /*
  * Template - Work in progress
+ * fileText: the original text of the file.
+ * reqHeaders: an array of strings: the headers which must exist in the fileText
+ *      The result will be formatted to contain only these headers, in the order given by this argument.
  */
-function formatFile(fileText, headerRequirements){
+function formatFile(fileText, reqHeaders){
+    //format the file so that it's easier to parse as a CSV
     let body = fileText.split(NEWLINE).map((row)=>row.split(","));
     let headers = body.shift(); //removes headers from body
-    if(headers.length < headerRequirements.length){
+    if(headers.length < reqHeaders.length){
         throw new Error("File does not contain enough headers: It only has " + headers.length + ", but requires at least " + headerRequirements.length);
     }
-}
-
-function indexOfIgnoreCase(searchFor, options){
-    let ret = -1;
-    searchFor = searchFor.toUpperCase();
-    for(let i = 0; i < options.length && ret === -1; i++){
-        if(options[i].toUpperCase() === searchFor){
-            ret = i;
+    
+    //verify that all the columns exist
+    let headerCols = {};
+    let idx;
+    reqHeaders.forEach((header)=>{
+        idx = headers.indexOf(header);
+        if(idx === -1){
+            throw new Error(`Could not find the header "${header}" in the given file.`);
         }
-    }
-    return ret;
+        headerCols[header] = idx;
+    });
+    
+    //create the new file
+    let newFile = "";
+    //let data;
+    body.forEach((row)=>{
+        for(let i = 0; i < reqHeaders.length; i++){
+            /*
+            data = row[headerCols[reqHeaders[i]]];
+            if(data === undefined){
+                throw new Error();
+            }*/
+            newFile += row[headerCols[reqHeaders[i]]];//data;
+            newFile += (i === reqHeaders.length - 1) ? "\n" : ",";
+        }
+    });
+    return newFile;
 }

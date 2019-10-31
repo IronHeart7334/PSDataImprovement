@@ -10,8 +10,8 @@ class AcctBalContentScript extends ContentScript{
         $('[name="ORG"]').val(query[3]);
         $('[name="Program"]').val(query[4]);
         $('[name="SubClass"]').val(query[5]);
-        $('[name="BudgetYear"]').val(query[6]);
-        $('[name="ProjectGrant"]').val(query[7]);
+        //$('[name="BudgetYear"]').val(query[6]);
+        $('[name="ProjectGrant"]').val(query[6]);
         let autoclick = await get("autoclick");
         if(autoclick){
             $('[name="Query"]')[0].click();
