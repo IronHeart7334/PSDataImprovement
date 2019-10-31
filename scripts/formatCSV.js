@@ -36,8 +36,12 @@ class HeaderRequirement{
 /*
  * Template - Work in progress
  */
-function formatFile(fileText){
-    
+function formatFile(fileText, headerRequirements){
+    let body = fileText.split(NEWLINE).map((row)=>row.split(","));
+    let headers = body.shift(); //removes headers from body
+    if(headers.length < headerRequirements.length){
+        throw new Error("File does not contain enough headers: It only has " + headers.length + ", but requires at least " + headerRequirements.length);
+    }
 }
 
 function indexOfIgnoreCase(searchFor, options){
