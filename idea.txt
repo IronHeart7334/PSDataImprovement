@@ -1,0 +1,19 @@
+So, crazy idea:
+what if I make some sort of scripting language to make this process easier?
+For example, when the user first clicks the "run script" button,
+creates a file like this:
+
+put VALUE QUERY_SELECTOR
+...
+click QUERY_SELECTOR
+if [expand button exists]{
+    click expand button
+}
+read result, push to the end of the file
+etc.
+
+Store the file, then have the JS read the file one line at a time,
+deleting that line or keeping track of which line it's on so that reloading doesn't cause problems.
+
+
+I don't know, seems a bit excessive, but it is one idea.
