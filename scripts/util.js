@@ -1,5 +1,11 @@
 const NEWLINE = /\r?\n|\r/;
 
+function setUrl(newUrl){
+    chrome.tabs.query({currentWindow: true, active: true}, (tab)=>{
+        chrome.tabs.update(tab.id, {url: newUrl});
+    });
+}
+
 //https://stackoverflow.com/questions/38261197/how-to-check-if-a-key-is-set-in-chrome-storage
 async function get(varName){
     let obj = {};

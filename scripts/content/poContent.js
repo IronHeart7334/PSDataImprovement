@@ -42,5 +42,13 @@ class PoContentScript extends ContentScript{
             $("a[href='PO_history.asp']")[0].click();
         }
     }
+    
+    async onDone(){
+        if((await get("everything")) !== null){
+            //poInfoFile was already set by reqContent
+            await this.clean(); //this won't get run on this page unless we call this now
+            setUrl("https://psreports.losrios.edu/PurchaseOrderInformation.asp");
+        }
+    }
 }
 new PoContentScript().run();

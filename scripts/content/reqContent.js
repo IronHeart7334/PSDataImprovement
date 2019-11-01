@@ -1,3 +1,4 @@
+// Requisition history
 class ReqContentScript extends ContentScript{
     constructor(){
         super("reqFile", "reqResult", "REQ_History.asp", "REQ_HistoryQ.asp");
@@ -40,6 +41,17 @@ class ReqContentScript extends ContentScript{
         let autoclick = await get("autoclick");
         if(autoclick){
             $("a[href='REQ_History.asp']")[0].click();
+        }
+    }
+    
+    async onDone(){
+        if((await get("everything")) !== null){
+            let text = await get(this.resultFileName);
+            text = formatFile(text, ["Req ID", "PO ID"]);
+            await set("poFile", text);
+            await set("poInfoFile", text);
+            await this.clean(); //this won't get run on this page unless we call this now
+            setUrl("https://psreports.losrios.edu/PO_History.asp");
         }
     }
 }

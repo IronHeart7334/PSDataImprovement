@@ -25,5 +25,10 @@ class PoInfoContentScript extends ContentScript{
             $("a[href='PurchaseOrderInformation.asp']")[0].click();
         }
     }
+    async onDone(){
+        if((await get("everything")) !== null){
+            await del("everything");
+        }
+    }
 }
 new PoInfoContentScript().run();

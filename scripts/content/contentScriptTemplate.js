@@ -21,6 +21,11 @@
  *      any "back" or "enter a new query" buttons on the page. 
  *      (only if this.autoclick is true)
  * 
+ * Additionally, you may wish to to override the onDone method.
+ * The onDone method is invoked after the process completes,
+ * after the result file is downloaded,
+ * but prior to cleaning.
+ * 
  * At the end of content scripts overriding this,
  * you should have something like this:
  * 
@@ -140,6 +145,7 @@ class ContentScript{
         } else if(remainingQ.trim() === ""){
             //no more queries to process, so clean up and download
             await this.downloadResult();
+            await this.onDone();
             await this.clean();
             done = true;
         }
@@ -171,5 +177,9 @@ class ContentScript{
     // this part should click the back button
     async postProcessResult(){
         throw new Error("method postProcessResult() is abstract; thus, it must be overridden.");
+    }
+    
+    async onDone(){
+        
     }
 }
