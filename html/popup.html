@@ -4,88 +4,63 @@
         <title>Input</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/popup.css"/>
         <script src="../scripts/jquery-3.4.1.min.js"></script>
         <script src="../scripts/util.js"></script>
         <script src="../scripts/formatCSV.js"></script>
     </head>
     <body>
-        <div>
-            <div>
+        <div id="body">
+            <div class="center" style="background-color: green">
                 <h2>Query Budget Data</h2>
-            </div>
-            <div>
                 <label for="acctFile">Budget code CSV file</label>
-                <input type="file" id="acctFile" name="acctFile"/>
-            </div>
-            <div>
+                <input type="file" id="acctFile"/>
                 <button id="acctSubmit">Gather Budget Data</button>
             </div>
-        </div>
-        <div>
-            <div>
+            <div class="center" style="background-color: yellow">
                 <h2>Query Requisition Data</h2>
-            </div>
-            <div>
                 <label for="reqFile">Requestor CSV file</label>
-                <input type="file" id="reqFile" name="reqFile"/>
-            </div>
-            <div>
+                <input type="file" id="reqFile"/>
                 <button id="reqSubmit">Gather Requisition Data</button>
             </div>
-        </div>
-        <div>
-            <div>
+            <div class="center" style="background-color: blue">
                 <h2>Query Purchase Order Transaction History</h2>
-            </div>
-            <div>
                 <label for="poFile">Upload result of requisition query</label>
-                <input type="file" id="poFile" name="poFile"/>
-            </div>
-            <div>
+                <input type="file" id="poFile"/>
                 <button id="poSubmit">Gather PO Transaction Data</button>
             </div>
-        </div>
-        <div>
-            <div>
+            <div class="center" style="background-color: red">
                 <h2>Query Purchase Order Information</h2>
-            </div>
-            <div>
                 <label for="poInfoFile">Upload result of requisition query</label>
-                <input type="file" id="poInfoFile" name="poInfoFile"/>
-            </div>
-            <div>
+                <input type="file" id="poInfoFile"/>
                 <button id="poInfoSubmit">Gather PO Information</button>
             </div>
-        </div>
-        <!--<div>
-            <div>
-                <h2>Do Everything</h2>
+            <!--<div>
+                <div>
+                    <h2>Do Everything</h2>
+                </div>
+                <div>
+                    <label for="acctFile2">Budget Codes</label>
+                    <input type="file" id="acctFile2"/>
+                </div>
+                <div>
+                    <label for="reqFile2">Requestor Data</label>
+                    <input type="file" id="reqFile2"/>
+                </div>
+                <div>
+                    <button id="everythingSubmit">Gather All Information</button>
+                </div>
+            </div>-->
+            <div id="tool-bar">
+                <div>
+                    <label for="autoclick">Auto-click submit buttons</label>
+                    <input type="checkbox" id="autoclick"/>
+                </div>
+                <div>
+                    <label for="test-mode">Run in Test Mode</label>
+                    <input type="checkbox" id="test-mode"/>
+                </div>
             </div>
-            <div>
-                <label for="acctFile2">Budget Codes</label>
-                <input type="file" id="acctFile2"/>
-            </div>
-            <div>
-                <label for="reqFile2">Requestor Data</label>
-                <input type="file" id="reqFile2"/>
-            </div>
-            <div>
-                <button id="everythingSubmit">Gather All Information</button>
-            </div>
-        </div>-->
-        <div>
-            <div>
-                <label for="autoclick">Auto-click submit buttons</label>
-                <input type="checkbox" id="autoclick" name="autoclick"/>
-            </div>
-        </div>
-        <div>
-            <div>
-                <label for="test-mode">Run in Test Mode</label>
-                <input type="checkbox" id="test-mode" name="test-mode"/>
-            </div>
-        </div>
-        <div>
             <div>
                 <h2>Program messages</h2>
                 <p id="info"></p>

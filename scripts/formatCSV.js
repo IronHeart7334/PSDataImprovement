@@ -49,3 +49,15 @@ function formatFile(fileText, reqHeaders){
     });
     return newFile;
 }
+
+/*
+ * Returns a function which, when invoked,
+ * accepts the text of a CSV file,
+ * and formats it using formatText.
+ * 
+ * Currently not used, but I may need it if we 
+ * wind up needing different functions for linkButton in popup.js
+ */
+function formatterFor(reqHeaders){
+    return (text)=>formatText(text, reqHeaders);
+}
