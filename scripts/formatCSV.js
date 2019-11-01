@@ -24,7 +24,7 @@ function formatFile(fileText, reqHeaders){
     
     //create the new file
     let newFile = "";
-    //let data;
+    let data;
     body.forEach((row)=>{
         for(let i = 0; i < reqHeaders.length; i++){
             /*
@@ -32,12 +32,18 @@ function formatFile(fileText, reqHeaders){
             Having an issue where files formatted incorrectly
             will result in a row of cells containing
             "undefined" appended to the end of the result file.
-            
+            */
             data = row[headerCols[reqHeaders[i]]];
             if(data === undefined){
                 throw new Error();
-            }*/
-            newFile += row[headerCols[reqHeaders[i]]];//data;
+            }
+            data = data.trim();
+            
+            //remove quote marks
+            while(data.indexOf('"') !== -1){
+                data = data.replace('"', '');
+            }
+            newFile += data;
             newFile += (i === reqHeaders.length - 1) ? "\n" : ",";
         }
     });

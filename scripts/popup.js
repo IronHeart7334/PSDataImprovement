@@ -5,7 +5,7 @@ function linkButton(buttonId, sourceFileName, resultFileName, startURL, headers)
         reader.onload = async(e)=>{
             let text = e.target.result;
             let newText = formatFile(text, headers);
-            if(false){
+            if($("#test-mode").is(":checked")){
                 download("test.csv", newText, "text/csv");
             } else {
                 await set(sourceFileName, newText);
@@ -17,6 +17,7 @@ function linkButton(buttonId, sourceFileName, resultFileName, startURL, headers)
         reader.readAsText(file, "UTF-8");
     });
 }
+
 linkButton(
     "acctSubmit", 
     "acctFile", 
@@ -32,6 +33,7 @@ linkButton(
         "Project/Grant"
     ]
 );
+
 linkButton(
     "reqSubmit", 
     "reqFile", 
@@ -43,33 +45,33 @@ linkButton(
     ]
 );
 
+linkButton(
+    "poSubmit",
+    "poFile",
+    "poResult",
+    "https://psreports.losrios.edu/PO_History.asp",
+    [
+        "Req ID",
+        "PO ID"
+    ]
+);
 
-//temp
-$("#test").click(()=>{
-    let file = $("#acctFile").get(0).files[0];
-    let reader = new FileReader();
-    reader.onload = async(e)=>{
-        let text = e.target.result;
-        try{
-            text = formatFile(text, [
-                "Business Unit",
-                "Account",
-                "Fund",
-                "Org/DeptID",
-                "Program",
-                "Sub-Class",
-                "Project/Grant"
-            ]);
-            download("test.csv", text, "text/csv");
-            //$("#info").after(`<p>${text}</p>`);
-        } catch(e){
-            $("#info").after(`<p>${e.message}</p>`);
-        }
-    };
-    reader.readAsText(file, "UTF-8");
-});
+linkButton(
+    "poInfoSubmit",
+    "poInfoFile",
+    "poInfoResult",
+    "https://psreports.losrios.edu/PurchaseOrderInformation.asp",
+    [
+        "Req ID",
+        "PO ID"
+    ]
+);
+
 
 //add file-filtering function parameter to linkButton.
+/*
+
+how to remove line with "po is awaiting dispatch"?
 
 //needs special behaviour
 $("#poSubmit").click(()=>{
@@ -107,8 +109,8 @@ $("#poSubmit").click(()=>{
         setUrl("https://psreports.losrios.edu/PO_History.asp");
     };
     reader.readAsText(file, "UTF-8");
-});
-
+});*/
+/*
 $("#poInfoSubmit").click(()=>{
     let file = $("#poInfoFile").get(0).files[0];
     let reader = new FileReader();
@@ -144,7 +146,7 @@ $("#poInfoSubmit").click(()=>{
         setUrl("https://psreports.losrios.edu/PurchaseOrderInformation.asp");
     };
     reader.readAsText(file, "UTF-8");
-});
+});*/
 /*
 $("#everythingSubmit").click(()=>{
     let acctFile = $("#acctFile2").get(0).files[0];
