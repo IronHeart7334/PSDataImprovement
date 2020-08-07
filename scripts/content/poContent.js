@@ -29,7 +29,7 @@ class PoContentScript extends ContentScript{
     }
     
     async expandReqResults(){
-        let expandButton = $('a[href="/PO_HistoryQ.asp?POID_History_PagingMove=ALL');
+        let expandButton = $('a[href="PO_HistoryQ.asp?POID_History_PagingMove=ALL"]');
         if(expandButton.length > 0){
             expandButton[0].click();
         }

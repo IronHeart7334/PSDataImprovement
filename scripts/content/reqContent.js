@@ -30,7 +30,7 @@ class ReqContentScript extends ContentScript{
     }
     
     async expandReqResults(){
-        let expandButton = $('a[href="/REQ_HistoryQ.asp?REQ_History_PagingMove=ALL');
+        let expandButton = $('a[href="/REQ_HistoryQ.asp?REQ_History_PagingMove=ALL"]');
         if(expandButton.length > 0){
             expandButton[0].click();
         }
