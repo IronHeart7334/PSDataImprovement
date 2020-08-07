@@ -6,6 +6,27 @@ function setUrl(newUrl){
     });
 }
 
+/*
+    Storage related functions.
+    It looks like Chrome extensions have no method of
+    securely storing data, but so long as we want to 
+    use a Chrome extension, this is one of our only
+    options.
+
+    Since the data is stored on the user's computer,
+    I don't think this is a major problem, as one
+    would have to access the user's computer to
+    access the data.
+
+    The only way I can think of to securely store the
+    data would be to store it on some other server, but
+    that just makes the process more convoluted.
+
+    I'll want to bring this up with Randy, see what he
+    thinks. If I need something more secure, I may have
+    to ask Tak.
+ */
+
 //https://stackoverflow.com/questions/38261197/how-to-check-if-a-key-is-set-in-chrome-storage
 async function get(varName){
     let obj = {};
